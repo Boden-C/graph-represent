@@ -1,0 +1,39 @@
+[project]
+name = "graph-represent"
+version = "0.1.0"
+description = "Controlled graph representation experiments"
+requires-python = ">=3.11"
+dependencies = [
+    "networkx>=3.3",
+    "openai>=1.68.2",
+    "pydantic>=2.10.6",
+    "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.4",
+    "ruff>=0.9.6",
+]
+
+[project.scripts]
+graph-represent = "graph_represent.cli:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["E501", "SIM108"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["graph_represent"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

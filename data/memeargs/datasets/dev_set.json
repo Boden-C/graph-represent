@@ -1,0 +1,1386 @@
+{
+  "corpus": "memeargs",
+  "description": "Representative development subset. Includes all local SemEval Task 3 dev items, then fills to 100 from training items by label and graph-size diversity.",
+  "feature_summary": {
+    "edge_count_mean": 6.72,
+    "label_count_mean": 2.3,
+    "node_count_mean": 7.03
+  },
+  "item_ids": [
+    "argtree_2026__0396__351_image_batch_2",
+    "argtree_2026__0597__628_image_batch_2",
+    "argtree_2026__0055__159_image_batch_2",
+    "argtree_2026__0520__541_image_batch_2",
+    "argtree_2026__0207__29_image_batch_2",
+    "argtree_2026__0093__166_image",
+    "argtree_2026__0243__39_image_batch_2",
+    "argtree_2026__0203__45_image_batch_2",
+    "argtree_2026__0098__152_image",
+    "argtree_2026__0221__200_image_batch_2",
+    "argtree_2026__0257__156_image_batch_2",
+    "argtree_2026__0099__193_image",
+    "argtree_2026__0186__170_image_batch_2",
+    "argtree_2026__0223__57_image_batch_2",
+    "argtree_2026__0114__160_image",
+    "argtree_2026__0113__114_image",
+    "argtree_2026__0610__642_image_batch_2",
+    "argtree_2026__0153__116_image",
+    "argtree_2026__0430__392_image_batch_2",
+    "argtree_2026__0177__179_image_batch_2",
+    "argtree_2026__0250__145_image_batch_2",
+    "argtree_2026__0198__177_image_batch_2",
+    "argtree_2026__0543__566_image_batch_2",
+    "argtree_2026__0621__653_image_batch_2",
+    "argtree_2026__0391__346_image_batch_2",
+    "argtree_2026__0168__107_image_batch_2",
+    "argtree_2026__0162__163_image",
+    "argtree_2026__0091__178_image",
+    "argtree_2026__0618__650_image_batch_2",
+    "argtree_2026__0228__74_image_batch_2",
+    "argtree_2026__0566__591_image_batch_2",
+    "argtree_2026__0555__580_image_batch_2",
+    "argtree_2026__0470__436_image_batch_2",
+    "argtree_2026__0535__557_image_batch_2",
+    "argtree_2026__0182__205_image_batch_2",
+    "argtree_2026__0552__577_image_batch_2",
+    "argtree_2026__0412__367_image_batch_2",
+    "argtree_2026__0537__559_image_batch_2",
+    "argtree_2026__0456__421_image_batch_2",
+    "argtree_2026__0052__72_image_batch_2",
+    "argtree_2026__0192__63_image_batch_2",
+    "argtree_2026__0457__422_image_batch_2",
+    "argtree_2026__0613__645_image_batch_2",
+    "argtree_2026__0395__350_image_batch_2",
+    "argtree_2026__0413__368_image_batch_2",
+    "argtree_2026__0234__131_image_batch_2",
+    "argtree_2026__0043__18_image_batch_2",
+    "argtree_2026__0630__662_image_batch_2",
+    "argtree_2026__0105__27_image",
+    "argtree_2026__0625__657_image_batch_2",
+    "argtree_2026__0452__417_image_batch_2",
+    "argtree_2026__0441__404_image_batch_2",
+    "argtree_2026__0032__52_image_batch_2",
+    "argtree_2026__0439__402_image_batch_2",
+    "argtree_2026__0075__188_image",
+    "argtree_2026__0047__2_image_batch_2",
+    "argtree_2026__0057__40_image_batch_2",
+    "argtree_2026__0040__121_image_batch_2",
+    "argtree_2026__0013__135_image_batch_2",
+    "argtree_2026__0035__91_image_batch_2",
+    "argtree_2026__0014__116_image_batch_2",
+    "argtree_2026__0051__6_image_batch_2",
+    "argtree_2026__0050__158_image_batch_2",
+    "argtree_2026__0029__46_image_batch_2",
+    "argtree_2026__0397__352_image_batch_2",
+    "argtree_2026__0044__175_image_batch_2",
+    "argtree_2026__0027__65_image_batch_2",
+    "argtree_2026__0017__136_image_batch_2",
+    "argtree_2026__0230__66_image_batch_2",
+    "argtree_2026__0049__108_image_batch_2",
+    "argtree_2026__0009__172_image_batch_2",
+    "argtree_2026__0237__127_image_batch_2",
+    "argtree_2026__0431__393_image_batch_2",
+    "argtree_2026__0016__30_image_batch_2",
+    "argtree_2026__0025__24_image_batch_2",
+    "argtree_2026__0030__134_image_batch_2",
+    "argtree_2026__0031__79_image_batch_2",
+    "argtree_2026__0024__31_image_batch_2",
+    "argtree_2026__0020__78_image_batch_2",
+    "argtree_2026__0054__112_image_batch_2",
+    "argtree_2026__0026__137_image_batch_2",
+    "argtree_2026__0005__173_image_batch_2",
+    "argtree_2026__0048__174_image_batch_2",
+    "argtree_2026__0036__129_image_batch_2",
+    "argtree_2026__0002__167_image_batch_2",
+    "argtree_2026__0062__139_image_batch_2",
+    "argtree_2026__0004__153_image_batch_2",
+    "argtree_2026__0042__43_image_batch_2",
+    "argtree_2026__0022__106_image_batch_2",
+    "argtree_2026__0037__187_image_batch_2",
+    "argtree_2026__0038__119_image_batch_2",
+    "argtree_2026__0033__141_image_batch_2",
+    "argtree_2026__0046__34_image_batch_2",
+    "argtree_2026__0061__92_image_batch_2",
+    "argtree_2026__0041__109_image_batch_2",
+    "argtree_2026__0015__142_image_batch_2",
+    "argtree_2026__0059__115_image_batch_2",
+    "argtree_2026__0001__111_image_batch_2",
+    "argtree_2026__0045__95_image_batch_2",
+    "argtree_2026__0028__155_image_batch_2"
+  ],
+  "items": [
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0396__351_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Appeal to (Strong) Emotions"
+      ],
+      "node_count": 4,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 4,
+      "id": "argtree_2026__0597__628_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Appeal to authority"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0055__159_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Appeal to (Strong) Emotions",
+        "Appeal to fear/prejudice"
+      ],
+      "node_count": 4,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 5,
+      "id": "argtree_2026__0520__541_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Bandwagon",
+        "Loaded Language",
+        "Thought-terminating clich\u00e9"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 14,
+      "id": "argtree_2026__0207__29_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Appeal to fear/prejudice",
+        "Black-and-white Fallacy/Dictatorship"
+      ],
+      "node_count": 14,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 4,
+      "id": "argtree_2026__0093__166_image",
+      "label_count": 1,
+      "labels": [
+        "Causal Oversimplification"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 4,
+      "id": "argtree_2026__0243__39_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Doubt"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0203__45_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Exaggeration/Minimisation"
+      ],
+      "node_count": 4,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 4,
+      "id": "argtree_2026__0098__152_image",
+      "label_count": 3,
+      "labels": [
+        "Flag-waving",
+        "Slogans",
+        "Smears"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0221__200_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Glittering generalities (Virtue)"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 4,
+      "id": "argtree_2026__0257__156_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Loaded Language"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0099__193_image",
+      "label_count": 1,
+      "labels": [
+        "Misrepresentation of Someone's Position (Straw Man)"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 4,
+      "id": "argtree_2026__0186__170_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Name calling/Labeling"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 12,
+      "id": "argtree_2026__0223__57_image_batch_2",
+      "label_count": 4,
+      "labels": [
+        "Loaded Language",
+        "Misrepresentation of Someone's Position (Straw Man)",
+        "Obfuscation, Intentional vagueness, Confusion",
+        "Smears"
+      ],
+      "node_count": 10,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0114__160_image",
+      "label_count": 1,
+      "labels": [
+        "Presenting Irrelevant Data (Red Herring)"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 6,
+      "id": "argtree_2026__0113__114_image",
+      "label_count": 2,
+      "labels": [
+        "Appeal to (Strong) Emotions",
+        "Reductio ad hitlerum"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 4,
+      "id": "argtree_2026__0610__642_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Repetition"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 3,
+      "id": "argtree_2026__0153__116_image",
+      "label_count": 2,
+      "labels": [
+        "Loaded Language",
+        "Slogans"
+      ],
+      "node_count": 4,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0430__392_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Smears"
+      ],
+      "node_count": 4,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 9,
+      "id": "argtree_2026__0177__179_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Appeal to fear/prejudice",
+        "Thought-terminating clich\u00e9"
+      ],
+      "node_count": 7,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0250__145_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Smears",
+        "Transfer"
+      ],
+      "node_count": 4,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 6,
+      "id": "argtree_2026__0198__177_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Whataboutism"
+      ],
+      "node_count": 7,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0543__566_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Appeal to (Strong) Emotions",
+        "Smears"
+      ],
+      "node_count": 4,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 4,
+      "id": "argtree_2026__0621__653_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Appeal to authority"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0391__346_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Appeal to fear/prejudice",
+        "Causal Oversimplification"
+      ],
+      "node_count": 4,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0168__107_image_batch_2",
+      "label_count": 4,
+      "labels": [
+        "Bandwagon",
+        "Exaggeration/Minimisation",
+        "Loaded Language",
+        "Smears"
+      ],
+      "node_count": 4,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 4,
+      "id": "argtree_2026__0162__163_image",
+      "label_count": 3,
+      "labels": [
+        "Black-and-white Fallacy/Dictatorship",
+        "Misrepresentation of Someone's Position (Straw Man)",
+        "Smears"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 7,
+      "id": "argtree_2026__0091__178_image",
+      "label_count": 2,
+      "labels": [
+        "Causal Oversimplification",
+        "Glittering generalities (Virtue)"
+      ],
+      "node_count": 8,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 4,
+      "id": "argtree_2026__0618__650_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Doubt"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 4,
+      "id": "argtree_2026__0228__74_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Exaggeration/Minimisation",
+        "Smears"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 4,
+      "id": "argtree_2026__0566__591_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Flag-waving",
+        "Slogans",
+        "Smears"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 6,
+      "id": "argtree_2026__0555__580_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Glittering generalities (Virtue)"
+      ],
+      "node_count": 7,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0470__436_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Loaded Language"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 6,
+      "id": "argtree_2026__0535__557_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Misrepresentation of Someone's Position (Straw Man)",
+        "Smears"
+      ],
+      "node_count": 7,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 11,
+      "id": "argtree_2026__0182__205_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Name calling/Labeling"
+      ],
+      "node_count": 9,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 5,
+      "id": "argtree_2026__0552__577_image_batch_2",
+      "label_count": 5,
+      "labels": [
+        "Loaded Language",
+        "Misrepresentation of Someone's Position (Straw Man)",
+        "Name calling/Labeling",
+        "Obfuscation, Intentional vagueness, Confusion",
+        "Whataboutism"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 6,
+      "id": "argtree_2026__0412__367_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Appeal to authority",
+        "Reductio ad hitlerum"
+      ],
+      "node_count": 7,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 8,
+      "id": "argtree_2026__0537__559_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Repetition",
+        "Whataboutism"
+      ],
+      "node_count": 8,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 4,
+      "id": "argtree_2026__0456__421_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Glittering generalities (Virtue)",
+        "Slogans"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 4,
+      "id": "argtree_2026__0052__72_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Smears"
+      ],
+      "node_count": 5,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0192__63_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Exaggeration/Minimisation",
+        "Smears",
+        "Thought-terminating clich\u00e9"
+      ],
+      "node_count": 4,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 4,
+      "id": "argtree_2026__0457__422_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Smears",
+        "Transfer"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 7,
+      "id": "argtree_2026__0613__645_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Whataboutism"
+      ],
+      "node_count": 8,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 5,
+      "id": "argtree_2026__0395__350_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Appeal to (Strong) Emotions",
+        "Loaded Language"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0413__368_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Appeal to authority",
+        "Loaded Language",
+        "Smears"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0234__131_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Appeal to fear/prejudice",
+        "Smears"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0043__18_image_batch_2",
+      "label_count": 5,
+      "labels": [
+        "Bandwagon",
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Repetition",
+        "Smears"
+      ],
+      "node_count": 6,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 10,
+      "id": "argtree_2026__0630__662_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Black-and-white Fallacy/Dictatorship",
+        "Thought-terminating clich\u00e9",
+        "Whataboutism"
+      ],
+      "node_count": 8,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 7,
+      "id": "argtree_2026__0105__27_image",
+      "label_count": 2,
+      "labels": [
+        "Causal Oversimplification",
+        "Smears"
+      ],
+      "node_count": 8,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 4,
+      "id": "argtree_2026__0625__657_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Doubt"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 6,
+      "id": "argtree_2026__0452__417_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Exaggeration/Minimisation",
+        "Smears"
+      ],
+      "node_count": 7,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 7,
+      "id": "argtree_2026__0441__404_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Flag-waving",
+        "Loaded Language",
+        "Smears"
+      ],
+      "node_count": 7,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 7,
+      "id": "argtree_2026__0032__52_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Glittering generalities (Virtue)"
+      ],
+      "node_count": 7,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 6,
+      "id": "argtree_2026__0439__402_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Loaded Language"
+      ],
+      "node_count": 7,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 9,
+      "id": "argtree_2026__0075__188_image",
+      "label_count": 2,
+      "labels": [
+        "Misrepresentation of Someone's Position (Straw Man)",
+        "Smears"
+      ],
+      "node_count": 10,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 17,
+      "id": "argtree_2026__0047__2_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Name calling/Labeling"
+      ],
+      "node_count": 15,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 6,
+      "id": "argtree_2026__0057__40_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Name calling/Labeling",
+        "Reductio ad hitlerum",
+        "Slogans"
+      ],
+      "node_count": 7,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0040__121_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Loaded Language",
+        "Repetition",
+        "Smears"
+      ],
+      "node_count": 4,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 6,
+      "id": "argtree_2026__0013__135_image_batch_2",
+      "label_count": 8,
+      "labels": [
+        "Appeal to (Strong) Emotions",
+        "Appeal to fear/prejudice",
+        "Flag-waving",
+        "Misrepresentation of Someone's Position (Straw Man)",
+        "Name calling/Labeling",
+        "Slogans",
+        "Smears",
+        "Transfer"
+      ],
+      "node_count": 7,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0035__91_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Smears"
+      ],
+      "node_count": 6,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 8,
+      "id": "argtree_2026__0014__116_image_batch_2",
+      "label_count": 5,
+      "labels": [
+        "Doubt",
+        "Loaded Language",
+        "Smears",
+        "Thought-terminating clich\u00e9",
+        "Whataboutism"
+      ],
+      "node_count": 8,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 5,
+      "id": "argtree_2026__0051__6_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Smears",
+        "Transfer"
+      ],
+      "node_count": 6,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 8,
+      "id": "argtree_2026__0050__158_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Name calling/Labeling",
+        "Whataboutism"
+      ],
+      "node_count": 9,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 7,
+      "id": "argtree_2026__0029__46_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Appeal to authority",
+        "Loaded Language",
+        "Misrepresentation of Someone's Position (Straw Man)"
+      ],
+      "node_count": 8,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 8,
+      "id": "argtree_2026__0397__352_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Appeal to fear/prejudice",
+        "Exaggeration/Minimisation"
+      ],
+      "node_count": 7,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 10,
+      "id": "argtree_2026__0044__175_image_batch_2",
+      "label_count": 5,
+      "labels": [
+        "Doubt",
+        "Flag-waving",
+        "Name calling/Labeling",
+        "Smears",
+        "Transfer"
+      ],
+      "node_count": 11,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 8,
+      "id": "argtree_2026__0027__65_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Exaggeration/Minimisation",
+        "Smears"
+      ],
+      "node_count": 7,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 10,
+      "id": "argtree_2026__0017__136_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Appeal to fear/prejudice",
+        "Flag-waving",
+        "Loaded Language"
+      ],
+      "node_count": 9,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 4,
+      "id": "argtree_2026__0230__66_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Glittering generalities (Virtue)",
+        "Loaded Language"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 8,
+      "id": "argtree_2026__0049__108_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Loaded Language"
+      ],
+      "node_count": 9,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 15,
+      "id": "argtree_2026__0009__172_image_batch_2",
+      "label_count": 4,
+      "labels": [
+        "Appeal to fear/prejudice",
+        "Loaded Language",
+        "Misrepresentation of Someone's Position (Straw Man)",
+        "Name calling/Labeling"
+      ],
+      "node_count": 10,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 4,
+      "id": "argtree_2026__0237__127_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 5,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0431__393_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Smears"
+      ],
+      "node_count": 6,
+      "split": "training_set_task3"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 6,
+      "id": "argtree_2026__0016__30_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Smears",
+        "Transfer"
+      ],
+      "node_count": 7,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 15,
+      "id": "argtree_2026__0025__24_image_batch_2",
+      "label_count": 5,
+      "labels": [
+        "Doubt",
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears",
+        "Whataboutism"
+      ],
+      "node_count": 12,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 11,
+      "id": "argtree_2026__0030__134_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Appeal to authority",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 10,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 6,
+      "id": "argtree_2026__0031__79_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Appeal to fear/prejudice",
+        "Exaggeration/Minimisation",
+        "Smears"
+      ],
+      "node_count": 7,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 12,
+      "id": "argtree_2026__0024__31_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Exaggeration/Minimisation",
+        "Smears"
+      ],
+      "node_count": 9,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 9,
+      "id": "argtree_2026__0020__78_image_batch_2",
+      "label_count": 5,
+      "labels": [
+        "Flag-waving",
+        "Loaded Language",
+        "Misrepresentation of Someone's Position (Straw Man)",
+        "Smears",
+        "Transfer"
+      ],
+      "node_count": 9,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 9,
+      "id": "argtree_2026__0054__112_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Glittering generalities (Virtue)",
+        "Name calling/Labeling"
+      ],
+      "node_count": 8,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 6,
+      "id": "argtree_2026__0026__137_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Loaded Language",
+        "Smears"
+      ],
+      "node_count": 7,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 7,
+      "id": "argtree_2026__0005__173_image_batch_2",
+      "label_count": 5,
+      "labels": [
+        "Exaggeration/Minimisation",
+        "Loaded Language",
+        "Misrepresentation of Someone's Position (Straw Man)",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 8,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 8,
+      "id": "argtree_2026__0048__174_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 7,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 10,
+      "id": "argtree_2026__0036__129_image_batch_2",
+      "label_count": 1,
+      "labels": [
+        "Smears"
+      ],
+      "node_count": 9,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 11,
+      "id": "argtree_2026__0002__167_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Smears",
+        "Transfer"
+      ],
+      "node_count": 9,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 14,
+      "id": "argtree_2026__0062__139_image_batch_2",
+      "label_count": 4,
+      "labels": [
+        "Appeal to fear/prejudice",
+        "Glittering generalities (Virtue)",
+        "Loaded Language",
+        "Smears"
+      ],
+      "node_count": 14,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 10,
+      "id": "argtree_2026__0004__153_image_batch_2",
+      "label_count": 4,
+      "labels": [
+        "Exaggeration/Minimisation",
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 10,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 11,
+      "id": "argtree_2026__0042__43_image_batch_2",
+      "label_count": 5,
+      "labels": [
+        "Exaggeration/Minimisation",
+        "Flag-waving",
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 10,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 8,
+      "id": "argtree_2026__0022__106_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Loaded Language",
+        "Smears"
+      ],
+      "node_count": 8,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 1,
+      "edge_count": 3,
+      "id": "argtree_2026__0037__187_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 4,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 11,
+      "id": "argtree_2026__0038__119_image_batch_2",
+      "label_count": 2,
+      "labels": [
+        "Smears",
+        "Transfer"
+      ],
+      "node_count": 10,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 5,
+      "id": "argtree_2026__0033__141_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 6,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0046__34_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 6,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 5,
+      "id": "argtree_2026__0061__92_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 6,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 7,
+      "id": "argtree_2026__0041__109_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 8,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 8,
+      "id": "argtree_2026__0015__142_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 8,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 8,
+      "id": "argtree_2026__0059__115_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 8,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 21,
+      "id": "argtree_2026__0001__111_image_batch_2",
+      "label_count": 3,
+      "labels": [
+        "Loaded Language",
+        "Name calling/Labeling",
+        "Smears"
+      ],
+      "node_count": 16,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 2,
+      "edge_count": 7,
+      "id": "argtree_2026__0045__95_image_batch_2",
+      "label_count": 0,
+      "labels": [],
+      "node_count": 8,
+      "split": "dev_set_task3_labeled"
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 8,
+      "id": "argtree_2026__0028__155_image_batch_2",
+      "label_count": 0,
+      "labels": [],
+      "node_count": 8,
+      "split": "dev_set_task3_labeled"
+    }
+  ],
+  "max_items": 100,
+  "name": "dev_set",
+  "schema_version": 1,
+  "selected_counts": {
+    "items": 100,
+    "labels": {
+      "Appeal to (Strong) Emotions": 6,
+      "Appeal to authority": 6,
+      "Appeal to fear/prejudice": 11,
+      "Bandwagon": 3,
+      "Black-and-white Fallacy/Dictatorship": 3,
+      "Causal Oversimplification": 4,
+      "Doubt": 6,
+      "Exaggeration/Minimisation": 12,
+      "Flag-waving": 8,
+      "Glittering generalities (Virtue)": 8,
+      "Loaded Language": 35,
+      "Misrepresentation of Someone's Position (Straw Man)": 11,
+      "Name calling/Labeling": 26,
+      "Obfuscation, Intentional vagueness, Confusion": 2,
+      "Presenting Irrelevant Data (Red Herring)": 1,
+      "Reductio ad hitlerum": 3,
+      "Repetition": 4,
+      "Slogans": 6,
+      "Smears": 53,
+      "Thought-terminating clich\u00e9": 5,
+      "Transfer": 9,
+      "Whataboutism": 8
+    },
+    "splits": {
+      "dev_set_task3_labeled": 45,
+      "training_set_task3": 55
+    }
+  },
+  "source_answers_path": "data/memeargs/answers/labels.json",
+  "source_counts": {
+    "answered": 466,
+    "graphs": 466,
+    "splits": {
+      "dev_set_task3_labeled": 45,
+      "test_set_task3": 2,
+      "training_set_task3": 419
+    }
+  },
+  "source_graph_path": "data/memeargs/graphs/memeargs_normalized.json"
+}

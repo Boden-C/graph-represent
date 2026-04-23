@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\boden\\Documents\\Coding\\research\\visgraph\\output\\test\\persuasion_threshold_optimization\\output\\optimized_thresholds.json",
+  "version_name": "gemma3_27b_4shot_graphbased_bottomup_random",
+  "input_mode": "graph_only",
+  "thresholds": {
+    "appeal to authority": 1.0000000000000002,
+    "appeal to fear/prejudice": 0.325,
+    "black-and-white fallacy/dictatorship": 1.0000000000000002,
+    "causal oversimplification": 1.0000000000000002,
+    "doubt": 0.15,
+    "exaggeration/minimisation": 0.0,
+    "flag-waving": 1.0000000000000002,
+    "glittering generalities (virtue)": 1.0000000000000002,
+    "loaded language": 1.0000000000000002,
+    "misrepresentation of someone's position (straw man)": 1.0000000000000002,
+    "name calling/labeling": 0.0,
+    "obfuscation, intentional vagueness, confusion": 1.0000000000000002,
+    "presenting irrelevant data (red herring)": 1.0000000000000002,
+    "reductio ad hitlerum": 1.0000000000000002,
+    "repetition": 1.0000000000000002,
+    "slogans": 1.0000000000000002,
+    "smears": 0.0,
+    "thought-terminating cliché": 1.0000000000000002,
+    "whataboutism": 1.0000000000000002,
+    "bandwagon": 1.0000000000000002,
+    "transfer": 0.35,
+    "appeal to (strong) emotions": 0.2
+  }
+}

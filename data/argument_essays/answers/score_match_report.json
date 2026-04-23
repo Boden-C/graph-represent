@@ -1,0 +1,30 @@
+{
+  "graph_count": 402,
+  "score_file": "C:\\Users\\boden\\Documents\\Coding\\research\\graph-represent\\data\\argument_essays\\raw\\argument_quality_dataset\\quality_annotation_table.csv",
+  "score_dataset": "persuasive-essays-argument-quality-dataset",
+  "answer_count": 400,
+  "missing_count": 2,
+  "missing": [
+    "essay212",
+    "essay213"
+  ],
+  "source_answer_count": 400,
+  "unmatched_source_answer_count": 0,
+  "component_score_count": 1902,
+  "matched_component_score_count": 1902,
+  "unmatched_component_score_count": 0,
+  "score_names": [
+    "cogency_mean",
+    "overall_quality_mean",
+    "reasonableness_counterargument_mean",
+    "reasonableness_rebuttal_mean",
+    "rhetoric_strategy_rate"
+  ],
+  "score_derivation": {
+    "cogency_mean": "Mean Cogency_* component score divided by 25.",
+    "rhetoric_strategy_rate": "Share of components labeled Logos, Pathos, or Ethos.",
+    "reasonableness_counterargument_mean": "Mean Reasonableness_counterargument_* score divided by 25, only where the source dataset annotates the field.",
+    "reasonableness_rebuttal_mean": "Mean Reasonableness_rebuttal_* score divided by 25, only where the source dataset annotates the field.",
+    "overall_quality_mean": "Mean of the available essay-level aggregate scores above."
+  }
+}

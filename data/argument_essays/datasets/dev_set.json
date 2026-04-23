@@ -1,0 +1,936 @@
+{
+  "corpus": "argument_essays",
+  "description": "Representative development subset selected across overall-quality buckets and graph-size diversity.",
+  "feature_summary": {
+    "edge_count_mean": 8.75,
+    "node_count_mean": 14.15,
+    "overall_quality_mean": 0.415
+  },
+  "item_ids": [
+    "essay338",
+    "essay030",
+    "essay335",
+    "essay383",
+    "essay041",
+    "essay088",
+    "essay083",
+    "essay330",
+    "essay140",
+    "essay328",
+    "essay377",
+    "essay238",
+    "essay103",
+    "essay307",
+    "essay210",
+    "essay132",
+    "essay302",
+    "essay368",
+    "essay281",
+    "essay381",
+    "essay004",
+    "essay121",
+    "essay192",
+    "essay386",
+    "essay130",
+    "essay303",
+    "essay003",
+    "essay005",
+    "essay069",
+    "essay320",
+    "essay001",
+    "essay374",
+    "essay360",
+    "essay202",
+    "essay106",
+    "essay388",
+    "essay136",
+    "essay209",
+    "essay022",
+    "essay246",
+    "essay304",
+    "essay107",
+    "essay072",
+    "essay108",
+    "essay399",
+    "essay384",
+    "essay025",
+    "essay317",
+    "essay157",
+    "essay045",
+    "essay115",
+    "essay075",
+    "essay361",
+    "essay043",
+    "essay011",
+    "essay274",
+    "essay228",
+    "essay277",
+    "essay068",
+    "essay007",
+    "essay392",
+    "essay216",
+    "essay267",
+    "essay321",
+    "essay397",
+    "essay028",
+    "essay395",
+    "essay294",
+    "essay364",
+    "essay350",
+    "essay162",
+    "essay300",
+    "essay111",
+    "essay154",
+    "essay182",
+    "essay275",
+    "essay131",
+    "essay218",
+    "essay239",
+    "essay189",
+    "essay221",
+    "essay160",
+    "essay101",
+    "essay126",
+    "essay169",
+    "essay352",
+    "essay156",
+    "essay155",
+    "essay055",
+    "essay331",
+    "essay285",
+    "essay342",
+    "essay284",
+    "essay116",
+    "essay389",
+    "essay129",
+    "essay142",
+    "essay018",
+    "essay177",
+    "essay312"
+  ],
+  "items": [
+    {
+      "claim_count": 6,
+      "edge_count": 5,
+      "id": "essay338",
+      "node_count": 11,
+      "overall_quality_mean": 0.0875,
+      "quality_bucket": 0
+    },
+    {
+      "claim_count": 7,
+      "edge_count": 4,
+      "id": "essay030",
+      "node_count": 11,
+      "overall_quality_mean": 0.133333,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 3,
+      "id": "essay335",
+      "node_count": 8,
+      "overall_quality_mean": 0.24,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 3,
+      "id": "essay383",
+      "node_count": 8,
+      "overall_quality_mean": 0.37,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 6,
+      "id": "essay041",
+      "node_count": 9,
+      "overall_quality_mean": 0.4,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 2,
+      "id": "essay088",
+      "node_count": 7,
+      "overall_quality_mean": 0.5,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 6,
+      "id": "essay083",
+      "node_count": 11,
+      "overall_quality_mean": 0.6,
+      "quality_bucket": 6
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 8,
+      "id": "essay330",
+      "node_count": 13,
+      "overall_quality_mean": 0.725,
+      "quality_bucket": 7
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 4,
+      "id": "essay140",
+      "node_count": 8,
+      "overall_quality_mean": 0.866667,
+      "quality_bucket": 8
+    },
+    {
+      "claim_count": 7,
+      "edge_count": 11,
+      "id": "essay328",
+      "node_count": 18,
+      "overall_quality_mean": 0.083333,
+      "quality_bucket": 0
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 6,
+      "id": "essay377",
+      "node_count": 11,
+      "overall_quality_mean": 0.17,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 4,
+      "id": "essay238",
+      "node_count": 10,
+      "overall_quality_mean": 0.28,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 4,
+      "id": "essay103",
+      "node_count": 8,
+      "overall_quality_mean": 0.3875,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 6,
+      "id": "essay307",
+      "node_count": 10,
+      "overall_quality_mean": 0.4,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 5,
+      "id": "essay210",
+      "node_count": 9,
+      "overall_quality_mean": 0.5,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 8,
+      "id": "essay132",
+      "node_count": 11,
+      "overall_quality_mean": 0.633333,
+      "quality_bucket": 6
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 11,
+      "id": "essay302",
+      "node_count": 17,
+      "overall_quality_mean": 0.7,
+      "quality_bucket": 7
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 5,
+      "id": "essay368",
+      "node_count": 9,
+      "overall_quality_mean": 0.833333,
+      "quality_bucket": 8
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 18,
+      "id": "essay281",
+      "node_count": 24,
+      "overall_quality_mean": 0.0,
+      "quality_bucket": 0
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 6,
+      "id": "essay381",
+      "node_count": 11,
+      "overall_quality_mean": 0.1375,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 6,
+      "id": "essay004",
+      "node_count": 11,
+      "overall_quality_mean": 0.2625,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 3,
+      "id": "essay121",
+      "node_count": 9,
+      "overall_quality_mean": 0.32,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 5,
+      "id": "essay192",
+      "node_count": 11,
+      "overall_quality_mean": 0.49,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 5,
+      "id": "essay386",
+      "node_count": 10,
+      "overall_quality_mean": 0.5,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 9,
+      "id": "essay130",
+      "node_count": 14,
+      "overall_quality_mean": 0.616667,
+      "quality_bucket": 6
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 15,
+      "id": "essay303",
+      "node_count": 21,
+      "overall_quality_mean": 0.7,
+      "quality_bucket": 7
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 6,
+      "id": "essay003",
+      "node_count": 10,
+      "overall_quality_mean": 0.833333,
+      "quality_bucket": 8
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 6,
+      "id": "essay005",
+      "node_count": 12,
+      "overall_quality_mean": 0.12,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 7,
+      "id": "essay069",
+      "node_count": 12,
+      "overall_quality_mean": 0.2875,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 3,
+      "edge_count": 6,
+      "id": "essay320",
+      "node_count": 9,
+      "overall_quality_mean": 0.333334,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 6,
+      "id": "essay001",
+      "node_count": 11,
+      "overall_quality_mean": 0.4,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 6,
+      "id": "essay374",
+      "node_count": 10,
+      "overall_quality_mean": 0.5,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 9,
+      "id": "essay360",
+      "node_count": 14,
+      "overall_quality_mean": 0.65,
+      "quality_bucket": 6
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 17,
+      "id": "essay202",
+      "node_count": 21,
+      "overall_quality_mean": 0.75,
+      "quality_bucket": 7
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 6,
+      "id": "essay106",
+      "node_count": 10,
+      "overall_quality_mean": 0.8,
+      "quality_bucket": 8
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 6,
+      "id": "essay388",
+      "node_count": 12,
+      "overall_quality_mean": 0.18,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 7,
+      "id": "essay136",
+      "node_count": 12,
+      "overall_quality_mean": 0.25,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 5,
+      "id": "essay209",
+      "node_count": 10,
+      "overall_quality_mean": 0.3,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 7,
+      "id": "essay022",
+      "node_count": 11,
+      "overall_quality_mean": 0.4625,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 6,
+      "id": "essay246",
+      "node_count": 11,
+      "overall_quality_mean": 0.55,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 10,
+      "id": "essay304",
+      "node_count": 14,
+      "overall_quality_mean": 0.666667,
+      "quality_bucket": 6
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 7,
+      "id": "essay107",
+      "node_count": 12,
+      "overall_quality_mean": 0.875,
+      "quality_bucket": 8
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 7,
+      "id": "essay072",
+      "node_count": 13,
+      "overall_quality_mean": 0.17,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 8,
+      "id": "essay108",
+      "node_count": 12,
+      "overall_quality_mean": 0.25,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 5,
+      "id": "essay399",
+      "node_count": 10,
+      "overall_quality_mean": 0.375,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 7,
+      "id": "essay384",
+      "node_count": 11,
+      "overall_quality_mean": 0.45,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 7,
+      "id": "essay025",
+      "node_count": 11,
+      "overall_quality_mean": 0.525,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 12,
+      "id": "essay317",
+      "node_count": 18,
+      "overall_quality_mean": 0.66,
+      "quality_bucket": 6
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 9,
+      "id": "essay157",
+      "node_count": 13,
+      "overall_quality_mean": 0.833333,
+      "quality_bucket": 8
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 8,
+      "id": "essay045",
+      "node_count": 14,
+      "overall_quality_mean": 0.17,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 8,
+      "id": "essay115",
+      "node_count": 13,
+      "overall_quality_mean": 0.29,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 5,
+      "id": "essay075",
+      "node_count": 11,
+      "overall_quality_mean": 0.33,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 6,
+      "id": "essay361",
+      "node_count": 12,
+      "overall_quality_mean": 0.41,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 7,
+      "id": "essay043",
+      "node_count": 12,
+      "overall_quality_mean": 0.55,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 7,
+      "edge_count": 12,
+      "id": "essay011",
+      "node_count": 19,
+      "overall_quality_mean": 0.616667,
+      "quality_bucket": 6
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 13,
+      "id": "essay274",
+      "node_count": 17,
+      "overall_quality_mean": 0.833333,
+      "quality_bucket": 8
+    },
+    {
+      "claim_count": 10,
+      "edge_count": 6,
+      "id": "essay228",
+      "node_count": 16,
+      "overall_quality_mean": 0.1,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 8,
+      "id": "essay277",
+      "node_count": 14,
+      "overall_quality_mean": 0.22,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 6,
+      "id": "essay068",
+      "node_count": 11,
+      "overall_quality_mean": 0.3,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 8,
+      "id": "essay007",
+      "node_count": 12,
+      "overall_quality_mean": 0.425,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 7,
+      "id": "essay392",
+      "node_count": 12,
+      "overall_quality_mean": 0.5,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 14,
+      "id": "essay216",
+      "node_count": 19,
+      "overall_quality_mean": 0.625,
+      "quality_bucket": 6
+    },
+    {
+      "claim_count": 7,
+      "edge_count": 10,
+      "id": "essay267",
+      "node_count": 17,
+      "overall_quality_mean": 0.158334,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 10,
+      "id": "essay321",
+      "node_count": 15,
+      "overall_quality_mean": 0.2125,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 6,
+      "id": "essay397",
+      "node_count": 11,
+      "overall_quality_mean": 0.35,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 7,
+      "edge_count": 7,
+      "id": "essay028",
+      "node_count": 14,
+      "overall_quality_mean": 0.408333,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 8,
+      "id": "essay395",
+      "node_count": 13,
+      "overall_quality_mean": 0.5125,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 17,
+      "id": "essay294",
+      "node_count": 23,
+      "overall_quality_mean": 0.6,
+      "quality_bucket": 6
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 12,
+      "id": "essay364",
+      "node_count": 17,
+      "overall_quality_mean": 0.18,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 10,
+      "id": "essay350",
+      "node_count": 16,
+      "overall_quality_mean": 0.25,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 7,
+      "id": "essay162",
+      "node_count": 11,
+      "overall_quality_mean": 0.383333,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 9,
+      "id": "essay300",
+      "node_count": 14,
+      "overall_quality_mean": 0.425,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 9,
+      "id": "essay111",
+      "node_count": 15,
+      "overall_quality_mean": 0.52,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 8,
+      "edge_count": 18,
+      "id": "essay154",
+      "node_count": 26,
+      "overall_quality_mean": 0.6,
+      "quality_bucket": 6
+    },
+    {
+      "claim_count": 8,
+      "edge_count": 12,
+      "id": "essay182",
+      "node_count": 20,
+      "overall_quality_mean": 0.171429,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 12,
+      "id": "essay275",
+      "node_count": 18,
+      "overall_quality_mean": 0.25,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 6,
+      "id": "essay131",
+      "node_count": 12,
+      "overall_quality_mean": 0.305,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 10,
+      "id": "essay218",
+      "node_count": 15,
+      "overall_quality_mean": 0.475,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 11,
+      "id": "essay239",
+      "node_count": 15,
+      "overall_quality_mean": 0.5,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 11,
+      "edge_count": 12,
+      "id": "essay189",
+      "node_count": 23,
+      "overall_quality_mean": 0.127778,
+      "quality_bucket": 1
+    },
+    {
+      "claim_count": 9,
+      "edge_count": 13,
+      "id": "essay221",
+      "node_count": 22,
+      "overall_quality_mean": 0.25,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 6,
+      "id": "essay160",
+      "node_count": 12,
+      "overall_quality_mean": 0.39,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 10,
+      "id": "essay101",
+      "node_count": 16,
+      "overall_quality_mean": 0.4375,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 13,
+      "id": "essay126",
+      "node_count": 18,
+      "overall_quality_mean": 0.55,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 8,
+      "edge_count": 20,
+      "id": "essay169",
+      "node_count": 28,
+      "overall_quality_mean": 0.273809,
+      "quality_bucket": 2
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 7,
+      "id": "essay352",
+      "node_count": 12,
+      "overall_quality_mean": 0.325,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 12,
+      "id": "essay156",
+      "node_count": 17,
+      "overall_quality_mean": 0.4,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 8,
+      "edge_count": 12,
+      "id": "essay155",
+      "node_count": 20,
+      "overall_quality_mean": 0.528571,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 8,
+      "id": "essay055",
+      "node_count": 12,
+      "overall_quality_mean": 0.325,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 14,
+      "id": "essay331",
+      "node_count": 20,
+      "overall_quality_mean": 0.48,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 7,
+      "edge_count": 16,
+      "id": "essay285",
+      "node_count": 23,
+      "overall_quality_mean": 0.5,
+      "quality_bucket": 5
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 8,
+      "id": "essay342",
+      "node_count": 12,
+      "overall_quality_mean": 0.3125,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 19,
+      "id": "essay284",
+      "node_count": 24,
+      "overall_quality_mean": 0.4,
+      "quality_bucket": 4
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 8,
+      "id": "essay116",
+      "node_count": 13,
+      "overall_quality_mean": 0.34,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 5,
+      "edge_count": 9,
+      "id": "essay389",
+      "node_count": 14,
+      "overall_quality_mean": 0.375,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 7,
+      "edge_count": 9,
+      "id": "essay129",
+      "node_count": 16,
+      "overall_quality_mean": 0.31,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 7,
+      "edge_count": 10,
+      "id": "essay142",
+      "node_count": 17,
+      "overall_quality_mean": 0.366667,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 4,
+      "edge_count": 14,
+      "id": "essay018",
+      "node_count": 18,
+      "overall_quality_mean": 0.3125,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 14,
+      "id": "essay177",
+      "node_count": 20,
+      "overall_quality_mean": 0.376666,
+      "quality_bucket": 3
+    },
+    {
+      "claim_count": 6,
+      "edge_count": 19,
+      "id": "essay312",
+      "node_count": 25,
+      "overall_quality_mean": 0.32,
+      "quality_bucket": 3
+    }
+  ],
+  "max_items": 100,
+  "name": "dev_set",
+  "schema_version": 1,
+  "selected_counts": {
+    "items": 100,
+    "quality_buckets": {
+      "0": 3,
+      "1": 12,
+      "2": 13,
+      "3": 22,
+      "4": 15,
+      "5": 14,
+      "6": 10,
+      "7": 4,
+      "8": 7
+    }
+  },
+  "source_answers_path": "data/argument_essays/answers/quality_scores.json",
+  "source_counts": {
+    "answered": 400,
+    "graphs": 402
+  },
+  "source_graph_path": "data/argument_essays/graphs/essays_normalized.json"
+}
