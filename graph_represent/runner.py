@@ -5,7 +5,7 @@ import importlib.util
 from datetime import datetime
 from pathlib import Path
 from types import ModuleType
-from typing import cast
+from typing import Sequence, cast
 
 from pydantic import BaseModel
 
@@ -253,9 +253,24 @@ def run_task(task: str, *, runname: str | None = None, limit: int | None = None)
     return run_script_workflow(loaded, runname=resolved_runname, limit=limit)
 
 
+def run_tasks(
+    tasks: Sequence[str],
+    *,
+    runname: str | None = None,
+    limit: int | None = None,
+) -> list[Path]:
+    resolved_runname = runname or _default_runname()
+    return [run_task(task, runname=resolved_runname, limit=limit) for task in tasks]
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run graph_represent pipelines")
-    parser.add_argument("task", type=str, help="JSON config or Python workflow path/name")
+    parser.add_argument(
+        "tasks",
+        nargs="+",
+        type=str,
+        help="One or more JSON configs or Python workflow paths/names",
+    )
     parser.add_argument("--runname", type=str, default=None, help="Output run name")
     parser.add_argument("--limit", "--count", type=int, default=None, help="Item limit")
     return parser

@@ -148,6 +148,7 @@ def score_run(run_root: str | Path) -> dict[str, Any]:
     prediction_rows: list[dict[str, Any]] = []
     bootstrap_rows: list[dict[str, Any]] = []
     metric_points: dict[tuple[str, str], tuple[float, float]] = {}
+    thresholds_by_variant: dict[tuple[str, str], dict[str, float]] = {}
     temporary_thresholds = _load_temporary_thresholds()
     rng = random.Random(7)
     bootstrap_rounds = 1000
@@ -192,6 +193,7 @@ def score_run(run_root: str | Path) -> dict[str, Any]:
 
         predicted_sets: list[list[str]] = []
         gold_sets: list[list[str]] = []
+        thresholds_by_variant[(version_name, input_mode)] = thresholds
         for variant in eval_variants:
             predicted_labels = threshold_scores_to_labels(variant.scores, thresholds).labels
             gold_labels = variant.gold.labels if variant.gold is not None else []
@@ -248,6 +250,8 @@ def score_run(run_root: str | Path) -> dict[str, Any]:
         )
         if len(variants) != len(baseline_variants):
             continue
+        thresholds = thresholds_by_variant[(version_name, input_mode)]
+        baseline_thresholds = thresholds_by_variant[(version_name, GraphTextFormat.JSON.value)]
         deltas_micro: list[float] = []
         deltas_macro: list[float] = []
         for _ in range(bootstrap_rounds):
@@ -255,12 +259,12 @@ def score_run(run_root: str | Path) -> dict[str, Any]:
             sample_variants = [variants[index] for index in indexes]
             sample_baseline = [baseline_variants[index] for index in indexes]
             sample_predicted = [
-                threshold_scores_to_labels(item.scores, {label: 0.5 for label in TECHNIQUES_TASK3}).labels
+                threshold_scores_to_labels(item.scores, thresholds).labels
                 for item in sample_variants
             ]
             sample_gold = [item.gold.labels if item.gold is not None else [] for item in sample_variants]
             base_predicted = [
-                threshold_scores_to_labels(item.scores, {label: 0.5 for label in TECHNIQUES_TASK3}).labels
+                threshold_scores_to_labels(item.scores, baseline_thresholds).labels
                 for item in sample_baseline
             ]
             base_gold = [item.gold.labels if item.gold is not None else [] for item in sample_baseline]
