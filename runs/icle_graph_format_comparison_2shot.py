@@ -151,6 +151,17 @@ def build_workflow() -> ScriptWorkflow:
     exemplar_ids = _load_exemplar_ids(exemplar_manifest_path)
     excluded_ids = set(exemplar_ids) if _exclude_few_shot_ids() else set()
 
+    loader_for_few_shot = IcleEssayDataLoader(
+        essays_path=ESSAYS_PATH,
+        answers_path=ANSWERS_PATH,
+        score_name="strength_of_argument",
+        sample_seed=seed,
+        excluded_ids=set(),
+    )
+    few_shot_prefix = None
+    if few_shot_mode != "off":
+        few_shot_prefix = _build_few_shot_prefix(loader_for_few_shot, exemplar_ids)
+
     loader = IcleEssayDataLoader(
         essays_path=ESSAYS_PATH,
         answers_path=ANSWERS_PATH,
@@ -158,9 +169,6 @@ def build_workflow() -> ScriptWorkflow:
         sample_seed=seed,
         excluded_ids=excluded_ids,
     )
-    few_shot_prefix = None
-    if few_shot_mode != "off":
-        few_shot_prefix = _build_few_shot_prefix(loader, exemplar_ids)
 
     build_graph = ModelInference(
         name="infer_graph__icle",
