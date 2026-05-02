@@ -1,4 +1,4 @@
-from graph_represent.types.corpus import CorpusGraphSample, GraphCorpusManifest
+from graph_represent.types.corpus import CorpusGraphSample, GraphCorpusManifest, IcleEssaySample
 from graph_represent.types.chat import ChatMessage, ChatMessagesPayload, ImageContentPart, TextContentPart
 from graph_represent.types.dataset import (
     ArgumentGraphData,
@@ -46,6 +46,7 @@ __all__ = [
     "ChatMessagesPayload",
     "CorpusGraphSample",
     "GraphCorpusManifest",
+    "IcleEssaySample",
     "Edge",
     "EdgeType",
     "Graph",

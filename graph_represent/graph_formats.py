@@ -28,6 +28,7 @@ class GraphTextFormat(StrEnum):
     RELATION_XML = "relation-xml"
     INLINE_PYTHON_DSL = "inline-python-dsl"
     COMPACT_JSON = "compact-json"
+    FORMAL_PROOF = "formal-proof"
     EDGE_SENTENCES = "edge-sentences"
 
 
@@ -43,6 +44,7 @@ FORMAT_LANGUAGE: dict[GraphTextFormat, str] = {
     GraphTextFormat.RELATION_XML: "xml",
     GraphTextFormat.INLINE_PYTHON_DSL: "python",
     GraphTextFormat.COMPACT_JSON: "json",
+    GraphTextFormat.FORMAL_PROOF: "text",
     GraphTextFormat.EDGE_SENTENCES: "text",
 }
 
@@ -58,6 +60,7 @@ FORMAT_LABEL: dict[GraphTextFormat, str] = {
     GraphTextFormat.RELATION_XML: "Relation XML",
     GraphTextFormat.INLINE_PYTHON_DSL: "Inline Python DSL",
     GraphTextFormat.COMPACT_JSON: "Compact JSON",
+    GraphTextFormat.FORMAL_PROOF: "Formal proof",
     GraphTextFormat.EDGE_SENTENCES: "Edge sentences",
 }
 
@@ -129,6 +132,8 @@ def render_graph(graph: Graph, format_name: str | GraphTextFormat) -> str:
         return _render_inline_python_dsl(graph)
     if resolved is GraphTextFormat.COMPACT_JSON:
         return _render_compact_json(graph)
+    if resolved is GraphTextFormat.FORMAL_PROOF:
+        return _render_formal_proof(graph)
     if resolved is GraphTextFormat.EDGE_SENTENCES:
         return _render_edge_sentences(graph)
     raise ValueError(f"Unsupported graph format '{format_name}'")
@@ -158,6 +163,8 @@ def parse_graph(text: str, format_name: str | GraphTextFormat) -> Graph:
         return _parse_inline_python_dsl(text)
     if resolved is GraphTextFormat.COMPACT_JSON:
         return _parse_compact_json(text)
+    if resolved is GraphTextFormat.FORMAL_PROOF:
+        return _parse_formal_proof(text)
     if resolved is GraphTextFormat.EDGE_SENTENCES:
         return _parse_edge_sentences(text)
     raise ValueError(f"Unsupported graph format '{format_name}'")
@@ -601,6 +608,101 @@ def _render_edge_sentences(graph: Graph) -> str:
         for premise in argument["premises"]:
             lines.append(f"Node {premise} {verb} Node {argument['claim']}.")
     return "\n".join(lines)
+
+
+def _render_formal_proof(graph: Graph) -> str:
+    payload = canonical_graph_payload(graph)
+    nodes = {int(node["idx"]): node for node in payload["nodes"]}
+    blocks: list[str] = []
+    for argument in payload["arguments"]:
+        claim_id = int(argument["claim"])
+        premises = [int(p) for p in argument["premises"]]
+        lines: list[str] = ["We have:"]
+        for i, pid in enumerate(premises):
+            text = str(nodes[pid]["text"])
+            if i == 0:
+                lines.append(f"{text} ({pid}) ")
+            else:
+                lines.append(f"and {text} ({pid}) ")
+        lines.append("")
+        premises_ref = " and ".join(f"({p})" for p in premises)
+        claim_text = str(nodes.get(claim_id, {"text": ""})["text"])
+        lines.append(f"From {premises_ref} => {claim_text} ({claim_id}.")
+        # close the sentence properly if missing )
+        if not lines[-1].endswith(")"):
+            lines[-1] = lines[-1].rstrip(".") + ")."
+        lines.append("")
+        lines.append("The argument ends here.")
+        blocks.append("\n".join(lines))
+
+    return "\n\n".join(blocks)
+
+
+def _parse_formal_proof(text: str) -> Graph:
+    nodes_by_id: dict[int, Vertex] = {}
+    arguments_by_key: dict[tuple[int, str], list[int]] = defaultdict(list)
+    lines = [ln.rstrip() for ln in text.splitlines()]
+    i = 0
+    n = len(lines)
+    while i < n:
+        line = lines[i].strip()
+        if not line:
+            i += 1
+            continue
+        if line.lower().startswith("we have:"):
+            i += 1
+            premises: list[int] = []
+            # collect premise lines until a 'From' line
+            while i < n:
+                cur = lines[i].strip()
+                if not cur:
+                    i += 1
+                    continue
+                if cur.startswith("From "):
+                    # parse From line
+                    from_line = cur
+                    # extract premise ids from left side
+                    left_right = re.match(r"^From\s+(.+?)\s*=>\s*(.+)\.?$", from_line)
+                    if not left_right:
+                        raise ValueError(f"Unsupported formal-proof From line '{from_line}'")
+                    left, right = left_right.groups()
+                    prem_ids = [int(m) for m in re.findall(r"\((\d+)\)", left)]
+                    premises = prem_ids
+                    # parse claim id and claim text from right
+                    claim_match = re.match(r"^(.*)\s*\((\d+)\)\s*$", right)
+                    if not claim_match:
+                        raise ValueError(f"Unsupported formal-proof claim part '{right}'")
+                    claim_text = claim_match.group(1).strip()
+                    claim_id = int(claim_match.group(2))
+                    # add claim node
+                    existing = nodes_by_id.get(claim_id)
+                    claim_node = Vertex(idx=claim_id, text=claim_text, type=VertexType.CLAIM)
+                    if existing is None:
+                        nodes_by_id[claim_id] = claim_node
+                    elif existing != claim_node:
+                        raise ValueError(f"Conflicting formal-proof claim id {claim_id}")
+                    # add premise nodes if missing (type as ELEMENT)
+                    for pid in premises:
+                        if pid not in nodes_by_id:
+                            # try to find textual description above
+                            # search backwards for a line that ends with '(pid)'
+                            found_text: str | None = None
+                            for j in range(i - 1, max(-1, i - 6), -1):
+                                m = re.match(rf"^(?:and\s+)?(.+?)\s*\({pid}\)\s*$", lines[j].strip())
+                                if m:
+                                    found_text = m.group(1).strip()
+                                    break
+                            nodes_by_id[pid] = Vertex(idx=pid, text=found_text or "", type=VertexType.ELEMENT)
+                    arguments_by_key[(claim_id, EdgeType.SUPPORT.value)].extend(premises)
+                    i += 1
+                    break
+                else:
+                    # premise line; just move on, parsing of actual ids happens in From
+                    i += 1
+            continue
+        i += 1
+
+    return _graph_from_components(nodes_by_id, arguments_by_key)
 
 
 def _graph_from_components(

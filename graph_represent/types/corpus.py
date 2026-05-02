@@ -33,3 +33,18 @@ class GraphCorpusManifest(SchemaModel):
     answers_path: Path | None = None
     item_count: int
     answered_count: int
+
+
+@register_type("IcleEssaySample")
+class IcleEssaySample(SchemaModel):
+    id: str
+    corpus: str
+    prompt: str | None = None
+    essay: str
+    paragraphs: list[str] = Field(default_factory=list)
+    scores: dict[str, float] = Field(default_factory=dict)
+    raw_scores: dict[str, float] = Field(default_factory=dict)
+
+    @property
+    def item_id(self) -> str:
+        return self.id

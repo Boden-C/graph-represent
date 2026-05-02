@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "name": "few_shot_exemplars",
+  "corpus": "icle",
+  "description": "Held-out few-shot exemplars for strength_of_argument calibration. Never include these ids in evaluation samples.",
+  "score_name": "strength_of_argument",
+  "selection_policy": "raw_score_extremes_tie_break_id",
+  "item_ids": [
+    "CZPR2001",
+    "BGSU1012"
+  ]
+}

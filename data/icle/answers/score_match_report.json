@@ -1,0 +1,40 @@
+{
+  "essay_count": 1006,
+  "essay_file": "C:\\Users\\boden\\Documents\\Coding\\research\\graph-represent\\data\\icle\\essays\\icle_essays_normalized.json",
+  "score_file": "C:\\Users\\boden\\Documents\\Coding\\research\\graph-represent\\data\\icle\\ICLEplusplus.csv",
+  "score_dataset": "ICLE++",
+  "source_answer_count": 1006,
+  "answer_count": 1006,
+  "matched_count": 1006,
+  "missing_count": 0,
+  "primary_score_name": "strength_of_argument",
+  "missing": [],
+  "unmatched_source_answer_count": 0,
+  "unmatched_source_answer_ids_sample": [],
+  "score_names": [
+    "adherence_to_prompt",
+    "clarity_of_thesis",
+    "coherence",
+    "cohesion",
+    "development",
+    "organization",
+    "overall_quality_mean",
+    "sentence_structure",
+    "strength_of_argument",
+    "technical_quality",
+    "vocabulary"
+  ],
+  "score_derivation": {
+    "overall_quality_mean": "Linear normalization of 'Overall' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0.",
+    "adherence_to_prompt": "Linear normalization of 'Adherence to Prompt' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0.",
+    "clarity_of_thesis": "Linear normalization of 'Clarity of Thesis' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0.",
+    "strength_of_argument": "Linear normalization of 'Strength of Argument' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0.",
+    "development": "Linear normalization of 'Development' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0.",
+    "organization": "Linear normalization of 'Organization' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0.",
+    "coherence": "Linear normalization of 'Coherence' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0.",
+    "cohesion": "Linear normalization of 'Cohesion' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0.",
+    "sentence_structure": "Linear normalization of 'Sentence Structure' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0.",
+    "vocabulary": "Linear normalization of 'Vocabulary' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0.",
+    "technical_quality": "Linear normalization of 'Technical Quality' from the ICLE++ 1.0-4.0 rubric onto 0.0-1.0."
+  }
+}

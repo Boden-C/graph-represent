@@ -1,0 +1,13 @@
+{
+  "essay_path": "C:\\Users\\boden\\Documents\\Coding\\research\\graph-represent\\data\\icle\\essays\\icle_essays_normalized.json",
+  "source_csv": "C:\\Users\\boden\\Documents\\Coding\\research\\graph-represent\\data\\icle\\ICLEplusplus.csv",
+  "source_row_count": 1006,
+  "normalized_record_count": 1006,
+  "records_with_prompt": 1006,
+  "normalization_method": "Preserve each ICLE++ row as plain text with prompt and paragraph segmentation. No argument graph structure is inferred or stored.",
+  "paragraph_count_summary": {
+    "min": 2,
+    "max": 56,
+    "mean": 8.376
+  }
+}

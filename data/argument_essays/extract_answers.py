@@ -33,7 +33,11 @@ SCORE_DERIVATION = {
         "Mean Reasonableness_rebuttal_* score divided by 25, "
         "only where the source dataset annotates the field."
     ),
-    "overall_quality_mean": "Mean of the available essay-level aggregate scores above.",
+    "self_reported_quality": (
+        "Evaluation target for the model's explicitly reported overall score. "
+        "Gold label uses the same aggregate target as calculated_overall_quality."
+    ),
+    "calculated_overall_quality": "Mean of the available essay-level aggregate scores above.",
 }
 
 
@@ -132,7 +136,8 @@ def _essay_scores(component_scores: list[dict[str, Any]]) -> dict[str, float]:
 
     overall = _safe_mean(scores.values())
     if overall is not None:
-        scores["overall_quality_mean"] = overall
+        scores["self_reported_quality"] = overall
+        scores["calculated_overall_quality"] = overall
     return scores
 
 

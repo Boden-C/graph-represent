@@ -14,17 +14,19 @@
   "matched_component_score_count": 1902,
   "unmatched_component_score_count": 0,
   "score_names": [
+    "calculated_overall_quality",
     "cogency_mean",
-    "overall_quality_mean",
     "reasonableness_counterargument_mean",
     "reasonableness_rebuttal_mean",
-    "rhetoric_strategy_rate"
+    "rhetoric_strategy_rate",
+    "self_reported_quality"
   ],
   "score_derivation": {
     "cogency_mean": "Mean Cogency_* component score divided by 25.",
     "rhetoric_strategy_rate": "Share of components labeled Logos, Pathos, or Ethos.",
     "reasonableness_counterargument_mean": "Mean Reasonableness_counterargument_* score divided by 25, only where the source dataset annotates the field.",
     "reasonableness_rebuttal_mean": "Mean Reasonableness_rebuttal_* score divided by 25, only where the source dataset annotates the field.",
-    "overall_quality_mean": "Mean of the available essay-level aggregate scores above."
+    "self_reported_quality": "Evaluation target for the model's explicitly reported overall score. Gold label uses the same aggregate target as calculated_overall_quality.",
+    "calculated_overall_quality": "Mean of the available essay-level aggregate scores above."
   }
 }

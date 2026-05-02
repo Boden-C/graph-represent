@@ -49,6 +49,34 @@ def test_argument_essay_answer_extraction_matches_quality_scores():
     assert payload[0]["component_scores"][0]["node_idx"] is not None
 
 
+def test_icle_answer_extraction_matches_text_release():
+    normalize_module = _load_module(REPO_ROOT / "data" / "icle" / "normalize_icle.py", "icle_normalize")
+    normalize_report = normalize_module.normalize_icle()
+    assert normalize_report["normalized_record_count"] == 1006
+
+    extract_module = _load_module(REPO_ROOT / "data" / "icle" / "extract_answers.py", "icle_extract")
+    report = extract_module.extract_answers()
+    assert report["essay_count"] == 1006
+    assert report["source_answer_count"] == 1006
+    assert report["answer_count"] == 1006
+    assert report["missing_count"] == 0
+    assert report["primary_score_name"] == "strength_of_argument"
+
+    essays = json.loads(
+        (REPO_ROOT / "data" / "icle" / "essays" / "icle_essays_normalized.json").read_text(encoding="utf-8")
+    )
+    assert len(essays) == 1006
+    assert essays[0]["prompt"] is not None
+    assert essays[0]["paragraphs"]
+
+    payload = json.loads(
+        (REPO_ROOT / "data" / "icle" / "answers" / "quality_scores.json").read_text(encoding="utf-8")
+    )
+    assert len(payload) == 1006
+    assert "strength_of_argument" in payload[0]["scores"]
+    assert "raw_scores" in payload[0]
+
+
 def test_corpus_loader_reads_graphs_and_labels():
     loader = CorpusGraphDataLoader(
         corpus="memeargs",
@@ -87,3 +115,24 @@ def test_graph_formats_round_trip_for_essay_graph():
         rendered = render_graph(graph, format_name)
         parsed = parse_graph(rendered, format_name)
         assert canonical_graph_payload(parsed) == expected
+
+
+def test_icle_few_shot_manifest_matches_raw_score_extremes():
+    answers = json.loads(
+        (REPO_ROOT / "data" / "icle" / "answers" / "quality_scores.json").read_text(encoding="utf-8")
+    )
+    exemplar_manifest = json.loads(
+        (REPO_ROOT / "data" / "icle" / "datasets" / "few_shot_exemplars.json").read_text(encoding="utf-8")
+    )
+    answers_by_id = {str(item["id"]): item for item in answers if isinstance(item, dict)}
+    exemplar_ids = [str(item) for item in exemplar_manifest["item_ids"]]
+
+    assert exemplar_ids == ["CZPR2001", "BGSU1012"]
+    raw_values = [
+        float(item["raw_scores"]["strength_of_argument"])
+        for item in answers
+        if isinstance(item, dict) and isinstance(item.get("raw_scores"), dict)
+    ]
+    low_id, high_id = exemplar_ids
+    assert float(answers_by_id[low_id]["raw_scores"]["strength_of_argument"]) == min(raw_values)
+    assert float(answers_by_id[high_id]["raw_scores"]["strength_of_argument"]) == max(raw_values)

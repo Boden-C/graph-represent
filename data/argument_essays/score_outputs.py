@@ -9,8 +9,16 @@ from pathlib import Path
 from statistics import mean, pstdev
 from typing import Any
 
-from graph_represent.graph_formats import GraphTextFormat, numeric_summary_stats
-from graph_represent.types.quality import ArgumentQualitySampleResult
+CORPUS_ROOT = Path(__file__).resolve().parent
+ANSWERS_PATH = CORPUS_ROOT / "answers" / "quality_scores.json"
+JSON_BASELINE_FORMAT = "json"
+
+CALCULATED_COMPONENT_SCORES = [
+    "cogency_mean",
+    "rhetoric_strategy_rate",
+    "reasonableness_counterargument_mean",
+    "reasonableness_rebuttal_mean",
+]
 
 
 def _summary_stats(values: list[float]) -> dict[str, float | int]:
@@ -22,6 +30,26 @@ def _summary_stats(values: list[float]) -> dict[str, float | int]:
         "std": round(pstdev(values), 6),
         "min": round(min(values), 6),
         "max": round(max(values), 6),
+    }
+
+
+def numeric_summary_stats(values: list[float]) -> dict[str, float | int]:
+    if not values:
+        return {"count": 0, "mean": 0.0, "median": 0.0, "p95": 0.0, "min": 0.0, "max": 0.0}
+    ordered = sorted(values)
+    p95_index = max(0, min(len(ordered) - 1, int(round((len(ordered) - 1) * 0.95))))
+    midpoint = len(ordered) // 2
+    if len(ordered) % 2 == 0:
+        median = (ordered[midpoint - 1] + ordered[midpoint]) / 2.0
+    else:
+        median = ordered[midpoint]
+    return {
+        "count": len(values),
+        "mean": round(sum(values) / len(values), 6),
+        "median": round(float(median), 6),
+        "p95": round(float(ordered[p95_index]), 6),
+        "min": round(float(ordered[0]), 6),
+        "max": round(float(ordered[-1]), 6),
     }
 
 
@@ -76,14 +104,57 @@ def _bootstrap_ci(values: list[float], lower: float = 0.025, upper: float = 0.97
     return float(ordered[lower_index]), float(ordered[upper_index])
 
 
+def _load_gold_scores() -> dict[str, dict[str, float]]:
+    payload = json.loads(ANSWERS_PATH.read_text(encoding="utf-8"))
+    gold_by_id: dict[str, dict[str, float]] = {}
+    for item in payload:
+        if not isinstance(item, dict):
+            continue
+        item_id = str(item.get("id", "")).strip()
+        raw_scores = item.get("scores")
+        if not item_id or not isinstance(raw_scores, dict):
+            continue
+        normalized: dict[str, float] = {}
+        for key, value in raw_scores.items():
+            if isinstance(value, int | float):
+                normalized[str(key)] = float(value)
+        if normalized:
+            gold_by_id[item_id] = normalized
+    return gold_by_id
+
+
+def _safe_mean(values: list[float]) -> float | None:
+    if not values:
+        return None
+    return float(mean(values))
+
+
+def _normalize_predicted_scores(raw_scores: dict[str, float]) -> dict[str, float]:
+    normalized = {str(key): float(value) for key, value in raw_scores.items()}
+    if "overall_quality_mean" in normalized:
+        normalized["self_reported_quality"] = normalized["overall_quality_mean"]
+    calculated_inputs = [
+        normalized[score_name]
+        for score_name in CALCULATED_COMPONENT_SCORES
+        if score_name in normalized
+    ]
+    calculated = _safe_mean(calculated_inputs)
+    if calculated is not None:
+        normalized["calculated_overall_quality"] = calculated
+    normalized.pop("overall_quality_mean", None)
+    return normalized
+
+
+def _load_samples(sample_dir: Path) -> list[dict[str, Any]]:
+    return [json.loads(path.read_text(encoding="utf-8")) for path in sorted(sample_dir.glob("*.json"))]
+
+
 def score_run(run_root: str | Path) -> dict[str, Any]:
     run_root = Path(run_root)
     output_root = run_root / "output"
     sample_dir = output_root / "quality_outputs"
-    samples = [
-        ArgumentQualitySampleResult.model_validate_json(path.read_text(encoding="utf-8"))
-        for path in sorted(sample_dir.glob("*.json"))
-    ]
+    samples = _load_samples(sample_dir)
+    gold_by_id = _load_gold_scores()
 
     score_values: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
     metric_rows: list[dict[str, Any]] = []
@@ -95,32 +166,37 @@ def score_run(run_root: str | Path) -> dict[str, Any]:
         lambda: ([], [], [])
     )
     for sample in samples:
-        for variant in sample.variants:
-            variant_key = f"{variant.version_name}::{variant.input_mode}"
-            if variant.input_char_count is not None:
-                length_chars[variant_key].append(float(variant.input_char_count))
-            if variant.input_line_count is not None:
-                length_lines[variant_key].append(float(variant.input_line_count))
-            for score_name, value in variant.scores.scores.items():
+        sample_item_id = str(sample["item_id"])
+        sample_gold_scores = gold_by_id.get(sample_item_id, sample.get("gold_scores") or {})
+        for variant in sample.get("variants", []):
+            variant_key = f"{variant['version_name']}::{variant['input_mode']}"
+            input_char_count = variant.get("input_char_count")
+            input_line_count = variant.get("input_line_count")
+            if input_char_count is not None:
+                length_chars[variant_key].append(float(input_char_count))
+            if input_line_count is not None:
+                length_lines[variant_key].append(float(input_line_count))
+            predicted_scores = _normalize_predicted_scores(variant["scores"]["scores"])
+            for score_name, value in predicted_scores.items():
                 score_values[variant_key][score_name].append(float(value))
                 prediction_rows.append(
                     {
-                        "item_id": sample.item_id,
-                        "version_name": variant.version_name,
-                        "graph_format": variant.input_mode,
+                        "item_id": sample_item_id,
+                        "version_name": variant["version_name"],
+                        "graph_format": variant["input_mode"],
                         "score_name": score_name,
                         "predicted": value,
-                        "gold": "" if not variant.gold_scores else variant.gold_scores.get(score_name, ""),
-                        "input_char_count": variant.input_char_count,
-                        "input_line_count": variant.input_line_count,
+                        "gold": sample_gold_scores.get(score_name, ""),
+                        "input_char_count": input_char_count,
+                        "input_line_count": input_line_count,
                     }
                 )
-                if variant.gold_scores and score_name in variant.gold_scores:
-                    key = (variant.version_name, variant.input_mode, score_name)
+                if score_name in sample_gold_scores:
+                    key = (variant["version_name"], variant["input_mode"], score_name)
                     xs, ys, ids = paired[key]
                     xs.append(float(value))
-                    ys.append(float(variant.gold_scores[score_name]))
-                    ids.append(sample.item_id)
+                    ys.append(float(sample_gold_scores[score_name]))
+                    ids.append(sample_item_id)
 
     for (version_name, graph_format, score_name), (predicted, gold, _) in sorted(paired.items()):
         errors = [p - g for p, g in zip(predicted, gold, strict=True)]
@@ -140,8 +216,8 @@ def score_run(run_root: str | Path) -> dict[str, Any]:
 
     raw_stats = {
         "item_count": len(samples),
-        "answered_count": sum(1 for sample in samples if sample.gold_scores),
-        "variant_count": sum(len(sample.variants) for sample in samples),
+        "answered_count": sum(1 for sample in samples if str(sample.get("item_id", "")) in gold_by_id),
+        "variant_count": sum(len(sample.get("variants", [])) for sample in samples),
         "score_stats": {
             variant: {score: _summary_stats(values) for score, values in scores.items()}
             for variant, scores in sorted(score_values.items())
@@ -186,11 +262,11 @@ def score_run(run_root: str | Path) -> dict[str, Any]:
         (version_name, graph_format, score_name): (predicted, gold)
         for (version_name, graph_format, score_name), (predicted, gold, _) in paired.items()
     }
-    target_score = "overall_quality_mean"
+    target_score = "calculated_overall_quality"
     for (version_name, graph_format, score_name), (predicted, gold) in sorted(metric_map.items()):
-        if graph_format == GraphTextFormat.JSON.value or score_name != target_score:
+        if graph_format == JSON_BASELINE_FORMAT or score_name != target_score:
             continue
-        baseline = metric_map.get((version_name, GraphTextFormat.JSON.value, score_name))
+        baseline = metric_map.get((version_name, JSON_BASELINE_FORMAT, score_name))
         if baseline is None:
             continue
         base_predicted, base_gold = baseline
@@ -246,7 +322,7 @@ def score_run(run_root: str | Path) -> dict[str, Any]:
 
     researcher_rows: list[dict[str, Any]] = []
     overall_rows = [
-        row for row in metric_rows if row["score_name"] == "overall_quality_mean" and row["mae"] is not None
+        row for row in metric_rows if row["score_name"] == "calculated_overall_quality" and row["mae"] is not None
     ]
     if overall_rows:
         best = min(overall_rows, key=lambda item: float(item["mae"]))

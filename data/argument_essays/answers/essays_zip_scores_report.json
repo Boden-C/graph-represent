@@ -1,0 +1,25 @@
+{
+  "source_zip": "C:\\Users\\boden\\Documents\\Coding\\research\\graph-represent\\data\\argument_essays\\raw\\essays.zip",
+  "essay_count": 102,
+  "numeric_score_names": [
+    "persuasiveness",
+    "strength",
+    "eloquence",
+    "relevance",
+    "specificity",
+    "evidence"
+  ],
+  "boolean_score_names": [
+    "logos",
+    "ethos",
+    "pathos"
+  ],
+  "numeric_scale": {
+    "min": 1.0,
+    "max": 6.0
+  },
+  "output_csv": "C:\\Users\\boden\\Documents\\Coding\\research\\graph-represent\\data\\argument_essays\\answers\\essays_zip_scores.csv",
+  "missing_strength_essays": [
+    "essay030"
+  ]
+}

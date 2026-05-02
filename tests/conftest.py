@@ -28,7 +28,15 @@ def mock_ai_requests(monkeypatch: pytest.MonkeyPatch) -> Callable[[], dict[str, 
         def fake_invoke(self, *, model, messages, response_type, create_kwargs):
             del model, messages, create_kwargs
             call_counter["count"] += 1
-            if "scores" in response_type.model_fields:
+            if response_type.__name__ == "Graph":
+                response_model = response_type(
+                    nodes=[
+                        {"idx": 0, "text": "Main claim.", "type": "claim"},
+                        {"idx": 1, "text": "Supporting reason.", "type": "element"},
+                    ],
+                    arguments=[{"claim": 0, "premises": [1], "type": "support"}],
+                )
+            elif "scores" in response_type.model_fields:
                 fields = response_type.model_fields["scores"]
                 annotation = str(fields.annotation)
                 if "float" in annotation and response_type.__name__ == "PersuasionTechniqueScores":
@@ -41,6 +49,7 @@ def mock_ai_requests(monkeypatch: pytest.MonkeyPatch) -> Callable[[], dict[str, 
                 else:
                     response_model = response_type(
                         scores={
+                            "strength_of_argument": 0.65,
                             "cogency_mean": 0.7,
                             "rhetoric_strategy_rate": 0.8,
                             "reasonableness_counterargument_mean": 0.6,
