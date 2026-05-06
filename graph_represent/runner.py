@@ -157,7 +157,6 @@ def run_json_pipeline(
             except Exception as exc:
                 runtime.manifest.mark_failed(item_id, str(exc))
                 print(f"[item {item_id}] failed: {exc}", flush=True)
-                raise
         print(f"Completed JSON pipeline '{spec.pipeline_name}'", flush=True)
         return run_root
     finally:
@@ -215,7 +214,6 @@ def run_script_workflow(
             except Exception as exc:
                 runtime.manifest.mark_failed(item_id, str(exc))
                 print(f"[item {item_id}] failed: {exc}", flush=True)
-                raise
         if workflow.finalize_run is not None:
             workflow.finalize_run(runtime)
         print(f"Completed script workflow '{workflow.name}'", flush=True)

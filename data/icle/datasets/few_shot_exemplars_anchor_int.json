@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "name": "few_shot_exemplars_anchor_int",
+  "corpus": "icle",
+  "description": "Seven-point anchor set spanning raw strength_of_argument scores from 1.0 to 4.0.",
+  "score_name": "strength_of_argument",
+  "selection_policy": "one_anchor_per_half_step",
+  "item_ids": [
+    "CZPR2001",
+    "CZUN1005",
+    "BGSU1013",
+    "BGSU1005",
+    "BGSU1001",
+    "BGSU1030",
+    "BGSU1012"
+  ]
+}

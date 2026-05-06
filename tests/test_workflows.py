@@ -8,6 +8,7 @@ import pytest
 
 from graph_represent.format_suite import COMPARISON_FORMATS
 from graph_represent.runner import build_parser, run_task, run_tasks
+from graph_represent.workflow import ScriptRuntime
 
 
 def test_runner_parser_accepts_multiple_tasks():
@@ -180,3 +181,17 @@ def test_icle_workflow_fails_on_exemplar_overlap(
     monkeypatch.setenv("GRAPH_REPRESENT_EXEMPLARS_PATH", str(overlap_manifest))
     with pytest.raises(ValueError, match="Few-shot leak detected"):
         run_task("icle_graph_format_comparison", runname="icle_overlap", limit=1)
+
+
+def test_model_resolution_stops_when_model_is_missing(monkeypatch, tmp_path):
+    runtime = ScriptRuntime(run_root=tmp_path / "run", cache_root=tmp_path / "cache")
+    monkeypatch.setattr(runtime, "_host_serves_model", lambda **kwargs: False)
+
+    with pytest.raises(ValueError, match="was not found on any configured host"):
+        runtime.get_provider(
+            "vllm",
+            base_url=None,
+            base_urls=["http://localhost:8000/v1", "http://10.176.142.89:8000/v1"],
+            api_key=None,
+            model="missing/model",
+        )

@@ -1,11 +1,42 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 from pydantic import BaseModel
 
 from graph_represent.processors.base import Processor, ProcessorContext
 from graph_represent.types.chat import ChatMessage, ChatMessagesPayload, TextContentPart
+
+
+def _deduplicate_enum_values(schema: dict[str, Any]) -> dict[str, Any]:
+    """Recursively remove duplicate values from enum fields in a JSON schema.
+    
+    vLLM's constrained decoder can get stuck looping if enums have duplicates,
+    especially in optional array schemas. This function cleans them up.
+    """
+    if isinstance(schema, dict):
+        if "enum" in schema and isinstance(schema["enum"], list):
+            # Remove duplicates while preserving order
+            seen = set()
+            deduplicated = []
+            for val in schema["enum"]:
+                if val not in seen:
+                    deduplicated.append(val)
+                    seen.add(val)
+            if len(deduplicated) != len(schema["enum"]):
+                schema = dict(schema)  # Copy to avoid mutating input
+                schema["enum"] = deduplicated
+        
+        # Recurse into nested structures
+        result = {}
+        for key, value in schema.items():
+            result[key] = _deduplicate_enum_values(value)
+        return result
+    elif isinstance(schema, list):
+        return [_deduplicate_enum_values(item) for item in schema]
+    else:
+        return schema
 
 
 class ModelInference(Processor):
@@ -58,13 +89,22 @@ class ModelInference(Processor):
         if self.config.get("temperature") is not None:
             create_kwargs["temperature"] = self.config["temperature"]
         if self.config.get("max_tokens") is not None:
-            create_kwargs["max_completion_tokens"] = self.config["max_tokens"]
+            # Most OpenAI-compatible providers (including common vLLM deployments)
+            # expect `max_tokens`. Some newer OpenAI APIs also accept
+            # `max_completion_tokens`, but sending only that can be ignored by
+            # OpenAI-compatible servers.
+            create_kwargs["max_tokens"] = self.config["max_tokens"]
         if self.config.get("top_p") is not None:
             create_kwargs["top_p"] = self.config["top_p"]
         if self.config.get("extra_create_kwargs"):
             create_kwargs.update(dict(self.config["extra_create_kwargs"]))
 
         openai_messages = provider.build_openai_messages(messages)
+        
+        # Get the schema and deduplicate enum values to avoid vLLM constrained-decoder loops
+        schema = self.output_type.model_json_schema()
+        schema = _deduplicate_enum_values(schema)
+        
         request_kwargs = {
             "model": str(self.config["model"]),
             "messages": openai_messages,
@@ -72,7 +112,7 @@ class ModelInference(Processor):
                 "type": "json_schema",
                 "json_schema": {
                     "name": self.output_type.__name__,
-                    "schema": self.output_type.model_json_schema(),
+                    "schema": schema,
                 },
             },
             **create_kwargs,
@@ -84,15 +124,20 @@ class ModelInference(Processor):
             create_kwargs=request_kwargs,
         )
         cache_key = context.runtime.inference_cache.build_cache_key(normalized_request)
+        cache_path = context.runtime.inference_cache.root / f"{cache_key}.json"
         cached_response = context.runtime.inference_cache.load(cache_key)
         if cached_response is not None:
+            provider.log_request_cache_reference(cache_key=cache_key, cache_path=cache_path)
             return self._validate_response_text(cached_response)
 
         normalized_request, response_text = provider.invoke(
             model=str(self.config["model"]),
             messages=messages,
             response_type=self.output_type,
+            response_schema=schema,
             create_kwargs=create_kwargs,
+            cache_key=cache_key,
+            cache_path=cache_path,
         )
         cache_key = context.runtime.inference_cache.build_cache_key(normalized_request)
         context.runtime.inference_cache.store(

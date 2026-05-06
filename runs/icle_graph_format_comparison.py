@@ -10,7 +10,7 @@ import networkx as nx
 from graph_represent.dataloaders.icle_essays import IcleEssayDataLoader
 from graph_represent.format_suite import COMPARISON_FORMATS
 from graph_represent.graph_formats import GraphTextFormat, fenced_graph_text, render_graph
-from graph_represent.models import GEMMA3_27B
+from graph_represent.models import DEFAULT_PROVIDER, MODEL_BASE_URLS
 from graph_represent.processors.clean_graph import CleanGraph
 from graph_represent.processors.model_inference import ModelInference
 from graph_represent.types.chat import ChatMessage, ChatMessagesPayload, TextContentPart
@@ -21,6 +21,7 @@ from graph_represent.types.quality import (
     ArgumentQualitySampleResult,
     ArgumentQualityScores,
     ArgumentQualityVariantResult,
+    StrengthOfArgumentJudgement,
 )
 from graph_represent.utils.files import atomic_write_text
 from graph_represent.workflow import ScriptWorkflow
@@ -33,7 +34,7 @@ EXEMPLARS_PATH = CORPUS_ROOT / "datasets" / "few_shot_exemplars.json"
 GRAPH_PROMPT_PATH = REPO_ROOT / "graph_represent" / "prompts" / "IcleArgumentGraphByModel__EssayByModel.md"
 SCORE_PROMPT_PATH = REPO_ROOT / "graph_represent" / "prompts" / "IcleStrengthOfArgumentByModel__GraphByModel.md"
 FEW_SHOT_PREFIX_PATH = REPO_ROOT / "graph_represent" / "prompts" / "IcleFewShotPrefix__StrengthOfArgument.md"
-MODEL = GEMMA3_27B
+MODEL_NAME = "google/gemma-3-27b-it"
 
 
 def _load_score_module():
@@ -165,9 +166,9 @@ def build_workflow() -> ScriptWorkflow:
     build_graph = ModelInference(
         name="infer_graph__icle",
         config={
-            "provider": MODEL.provider,
-            "base_urls": MODEL.base_urls,
-            "model": MODEL.name,
+            "provider": DEFAULT_PROVIDER,
+            "base_urls": MODEL_BASE_URLS,
+            "model": MODEL_NAME,
             "system_prompt_file": str(GRAPH_PROMPT_PATH),
             "temperature": 0.0,
             "max_tokens": 8192,
@@ -190,15 +191,15 @@ def build_workflow() -> ScriptWorkflow:
         format_name: ModelInference(
             name=f"infer_quality__{format_name.value}",
             config={
-                "provider": MODEL.provider,
-                "base_urls": MODEL.base_urls,
-                "model": MODEL.name,
+                "provider": DEFAULT_PROVIDER,
+                "base_urls": MODEL_BASE_URLS,
+                "model": MODEL_NAME,
                 "system_prompt_file": str(SCORE_PROMPT_PATH),
                 "temperature": 0.0,
                 "max_tokens": 512,
             },
             input_type=ChatMessagesPayload,
-            output_type=ArgumentQualityScores,
+            output_type=StrengthOfArgumentJudgement,
             retry=RetryPolicyConfig(),
         )
         for format_name in target_formats
@@ -241,13 +242,16 @@ def build_workflow() -> ScriptWorkflow:
                 context=context,
                 save_output=False,
             )
+            judgement = StrengthOfArgumentJudgement.model_validate(scores.model_dump())
             variants.append(
                 ArgumentQualityVariantResult(
                     item_id=sample.id,
                     version_name="icle_generated",
                     input_mode=format_name.value,
-                    model_name=MODEL.name,
-                    scores=ArgumentQualityScores.model_validate(scores.model_dump()),
+                    model_name=MODEL_NAME,
+                    scores=ArgumentQualityScores(scores={
+                        "strength_of_argument": float(judgement.scores.strength_of_argument)
+                    }),
                     gold_scores={"strength_of_argument": sample.scores["strength_of_argument"]},
                     gold_raw_scores={"strength_of_argument": sample.raw_scores["strength_of_argument"]},
                     input_char_count=char_count,
@@ -277,8 +281,8 @@ def build_workflow() -> ScriptWorkflow:
             "few_shot_item_ids": exemplar_ids,
             "few_shot_mode": few_shot_mode,
             "target_formats": [item.value for item in target_formats],
-            "graph_model": MODEL.name,
-            "score_model": MODEL.name,
+            "graph_model": MODEL_NAME,
+            "score_model": MODEL_NAME,
             "graph_prompt_file": str(GRAPH_PROMPT_PATH),
             "score_prompt_file": str(SCORE_PROMPT_PATH),
             "few_shot_prefix_file": str(FEW_SHOT_PREFIX_PATH),

@@ -12,6 +12,7 @@ from graph_represent.format_suite import COMPARISON_FORMATS
 from graph_represent.graph_formats import GraphTextFormat, fenced_graph_text, render_graph
 from graph_represent.models import DEFAULT_PROVIDER, MODEL_BASE_URLS
 from graph_represent.processors.clean_graph import CleanGraph
+from graph_represent.processors.load_graph_from_disk import LoadGraphFromDisk
 from graph_represent.processors.model_inference import ModelInference
 from graph_represent.types.chat import ChatMessage, ChatMessagesPayload, TextContentPart
 from graph_represent.types.corpus import IcleEssaySample
@@ -30,11 +31,20 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 CORPUS_ROOT = REPO_ROOT / "data" / "icle"
 ESSAYS_PATH = CORPUS_ROOT / "essays" / "icle_essays_normalized.json"
 ANSWERS_PATH = CORPUS_ROOT / "answers" / "quality_scores.json"
-EXEMPLARS_PATH = CORPUS_ROOT / "datasets" / "few_shot_exemplars.json"
-GRAPH_PROMPT_PATH = REPO_ROOT / "graph_represent" / "prompts" / "IcleArgumentGraphByModel__EssayByModel.md"
-SCORE_PROMPT_PATH = REPO_ROOT / "graph_represent" / "prompts" / "IcleStrengthOfArgumentByModel__GraphByModel.md"
+EXEMPLARS_PATH = CORPUS_ROOT / "datasets" / "few_shot_exemplars_anchor_int.json"
+SCORE_PROMPT_PATH = REPO_ROOT / "graph_represent" / "prompts" / "IcleStrengthOfArgumentByModel__GraphByModel_AnchorInt.md"
 FEW_SHOT_PREFIX_PATH = REPO_ROOT / "graph_represent" / "prompts" / "IcleFewShotPrefix__StrengthOfArgument.md"
-MODEL_NAME = "Qwen/Qwen3-VL-8B-Instruct"
+
+DEFAULT_EXISTING_GRAPHS_DIR = (
+    REPO_ROOT
+    / "output"
+    / "20260501_233546"
+    / "icle_graph_format_comparison"
+    / "output"
+    / "infer_graph__icle"
+)
+
+SCORE_MODEL_NAME = os.getenv("GRAPH_REPRESENT_SCORE_MODEL", "Qwen/Qwen3-VL-8B-Instruct")
 
 
 def _load_score_module():
@@ -45,6 +55,29 @@ def _load_score_module():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def _existing_graphs_dir() -> Path:
+    raw = os.getenv("GRAPH_REPRESENT_EXISTING_GRAPHS_DIR")
+    if raw is not None and raw.strip():
+        return Path(raw)
+    if DEFAULT_EXISTING_GRAPHS_DIR.exists():
+        return DEFAULT_EXISTING_GRAPHS_DIR
+    raise ValueError(
+        "Set GRAPH_REPRESENT_EXISTING_GRAPHS_DIR to a folder containing per-item Graph JSONs "
+        "(e.g., output/<run>/<workflow>/output/infer_graph__icle)."
+    )
+
+
+def _load_existing_run_config(graphs_dir: Path) -> dict[str, object] | None:
+    candidate = graphs_dir.parent / "run_config.json"
+    if not candidate.exists():
+        return None
+    try:
+        payload = json.loads(candidate.read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return None
+    return payload if isinstance(payload, dict) else None
 
 
 def _parse_target_formats() -> list[GraphTextFormat]:
@@ -94,33 +127,32 @@ def _exemplar_manifest_path() -> Path:
 
 def _format_few_shot_example(sample: IcleEssaySample) -> str:
     raw_score = sample.raw_scores["strength_of_argument"]
+    class_index = int(round((raw_score - 1.0) / 0.5))
     return (
         f"ID: {sample.id}\n"
+        f"Anchor class k (0-6): {class_index}\n"
         f"Prompt:\n{sample.prompt or ''}\n\n"
         f"Essay:\n{sample.essay}\n\n"
         f"Gold strength_of_argument (raw 1.0-4.0): {raw_score:.1f}\n"
     )
 
 
-def _build_few_shot_prefix(loader: IcleEssayDataLoader, exemplar_ids: list[str]) -> str:
+def _build_few_shot_prefix(exemplar_ids: list[str]) -> str:
     template = FEW_SHOT_PREFIX_PATH.read_text(encoding="utf-8")
+    exemplar_loader = IcleEssayDataLoader(
+        essays_path=ESSAYS_PATH,
+        answers_path=ANSWERS_PATH,
+        score_name="strength_of_argument",
+        sample_seed=None,
+        excluded_ids=set(),
+    )
     examples: list[str] = []
     for item_id in exemplar_ids:
-        sample = loader.get_item(item_id)
+        sample = exemplar_loader.get_item(item_id)
         if sample is None:
             raise ValueError(f"Few-shot exemplar id '{item_id}' not found in ICLE loader")
         examples.append(_format_few_shot_example(sample))
     return template.replace("{few_shot_examples}", "\n\n---\n\n".join(examples))
-
-
-def _graph_messages(sample: IcleEssaySample) -> ChatMessagesPayload:
-    text = (
-        f"Essay prompt:\n{sample.prompt or '(none)'}\n\n"
-        f"Essay text:\n{sample.essay}\n"
-    )
-    return ChatMessagesPayload(
-        messages=[ChatMessage(role="user", content=[TextContentPart(text=text)])]
-    )
 
 
 def _score_messages(
@@ -152,17 +184,6 @@ def build_workflow() -> ScriptWorkflow:
     exemplar_ids = _load_exemplar_ids(exemplar_manifest_path)
     excluded_ids = set(exemplar_ids) if _exclude_few_shot_ids() else set()
 
-    loader_for_few_shot = IcleEssayDataLoader(
-        essays_path=ESSAYS_PATH,
-        answers_path=ANSWERS_PATH,
-        score_name="strength_of_argument",
-        sample_seed=seed,
-        excluded_ids=set(),
-    )
-    few_shot_prefix = None
-    if few_shot_mode != "off":
-        few_shot_prefix = _build_few_shot_prefix(loader_for_few_shot, exemplar_ids)
-
     loader = IcleEssayDataLoader(
         essays_path=ESSAYS_PATH,
         answers_path=ANSWERS_PATH,
@@ -171,17 +192,15 @@ def build_workflow() -> ScriptWorkflow:
         excluded_ids=excluded_ids,
     )
 
-    build_graph = ModelInference(
-        name="infer_graph__icle",
-        config={
-            "provider": DEFAULT_PROVIDER,
-            "base_urls": MODEL_BASE_URLS,
-            "model": MODEL_NAME,
-            "system_prompt_file": str(GRAPH_PROMPT_PATH),
-            "temperature": 0.0,
-            "max_tokens": 8192,
-        },
-        input_type=ChatMessagesPayload,
+    few_shot_prefix = None
+    if few_shot_mode != "off":
+        few_shot_prefix = _build_few_shot_prefix(exemplar_ids)
+
+    graphs_dir = _existing_graphs_dir()
+    load_graph = LoadGraphFromDisk(
+        name="load_graph__icle",
+        config={"graphs_dir": str(graphs_dir)},
+        input_type=IcleEssaySample,
         output_type=Graph,
         retry=RetryPolicyConfig(),
     )
@@ -201,7 +220,7 @@ def build_workflow() -> ScriptWorkflow:
             config={
                 "provider": DEFAULT_PROVIDER,
                 "base_urls": MODEL_BASE_URLS,
-                "model": MODEL_NAME,
+                "model": SCORE_MODEL_NAME,
                 "system_prompt_file": str(SCORE_PROMPT_PATH),
                 "temperature": 0.0,
                 "max_tokens": 512,
@@ -215,12 +234,11 @@ def build_workflow() -> ScriptWorkflow:
 
     def process_item(item, runtime, context):
         sample = IcleEssaySample.model_validate(item.model_dump())
-        graph_messages = _graph_messages(sample)
         graph = runtime.run_stage(
             stage_index=0,
-            stage_name="infer_graph__icle",
-            processor=build_graph,
-            input_data=graph_messages,
+            stage_name="load_graph__icle",
+            processor=load_graph,
+            input_data=sample,
             context=context,
         )
         graph = runtime.run_stage(
@@ -254,9 +272,9 @@ def build_workflow() -> ScriptWorkflow:
             variants.append(
                 ArgumentQualityVariantResult(
                     item_id=sample.id,
-                    version_name="icle_generated",
+                    version_name="icle_existing_graphs",
                     input_mode=format_name.value,
-                    model_name=MODEL_NAME,
+                    model_name=SCORE_MODEL_NAME,
                     scores=ArgumentQualityScores(scores={
                         "strength_of_argument": float(judgement.scores.strength_of_argument)
                     }),
@@ -279,9 +297,13 @@ def build_workflow() -> ScriptWorkflow:
         overlap = sorted(set(eval_ids).intersection(exemplar_ids))
         if overlap:
             raise ValueError(f"Few-shot leak detected. Overlapping ids: {', '.join(overlap)}")
+
+        existing_cfg = _load_existing_run_config(graphs_dir)
         run_config = {
             "corpus": "icle",
-            "graph_path_mode": "per_run_generated",
+            "graph_path_mode": "existing_dir",
+            "existing_graphs_dir": str(graphs_dir),
+            "existing_graph_run_config": existing_cfg,
             "primary_metric": "qwk",
             "score_name": "strength_of_argument",
             "sample_seed": seed,
@@ -289,9 +311,7 @@ def build_workflow() -> ScriptWorkflow:
             "few_shot_item_ids": exemplar_ids,
             "few_shot_mode": few_shot_mode,
             "target_formats": [item.value for item in target_formats],
-            "graph_model": MODEL_NAME,
-            "score_model": MODEL_NAME,
-            "graph_prompt_file": str(GRAPH_PROMPT_PATH),
+            "score_model": SCORE_MODEL_NAME,
             "score_prompt_file": str(SCORE_PROMPT_PATH),
             "few_shot_prefix_file": str(FEW_SHOT_PREFIX_PATH),
             "exemplar_manifest": str(exemplar_manifest_path),
@@ -303,7 +323,7 @@ def build_workflow() -> ScriptWorkflow:
         _load_score_module().score_run(runtime.output_store.run_root)
 
     return ScriptWorkflow(
-        name="icle_graph_format_comparison_2shot",
+        name="icle_graph_format_comparison_existing_graphs_anchor_int",
         loader=loader,
         final_stage_name="quality_outputs",
         final_output_type=ArgumentQualitySampleResult,

@@ -56,6 +56,17 @@ class OpenAICompatibleProvider:
         if self.log_file is not None:
             print(message, file=self.log_file, flush=True)
 
+    def log_request_cache_reference(self, *, cache_key: str, cache_path: Path) -> None:
+        self._log("REQUEST_CACHE:")
+        self._log(
+            pretty_json_for_log(
+                {
+                    "cache_key": cache_key,
+                    "cache_path": cache_path,
+                }
+            )
+        )
+
     def close(self) -> None:
         close = getattr(self._client, "close", None)
         if callable(close):
@@ -146,9 +157,13 @@ class OpenAICompatibleProvider:
         model: str,
         messages: list[ChatMessage],
         response_type: type[BaseModel],
+        response_schema: dict[str, Any] | None = None,
         create_kwargs: dict[str, Any],
+        cache_key: str | None = None,
+        cache_path: Path | None = None,
     ) -> tuple[dict[str, Any], str]:
         openai_messages = self.build_openai_messages(messages)
+        schema = response_schema if response_schema is not None else response_type.model_json_schema()
         request_kwargs = {
             "model": model,
             "messages": openai_messages,
@@ -156,7 +171,7 @@ class OpenAICompatibleProvider:
                 "type": "json_schema",
                 "json_schema": {
                     "name": response_type.__name__,
-                    "schema": response_type.model_json_schema(),
+                    "schema": schema,
                 },
             },
             **create_kwargs,
@@ -167,19 +182,61 @@ class OpenAICompatibleProvider:
             response_type=response_type,
             create_kwargs=request_kwargs,
         )
+        if cache_key is not None and cache_path is not None:
+            self.log_request_cache_reference(cache_key=cache_key, cache_path=cache_path)
         self._log("REQUEST_JSON:")
         self._log(pretty_json_for_log(normalized_request))
 
+        # Clear the rolling latest log for this turn. We only write to it
+        # every 10 seconds while the model is streaming. If the response
+        # finishes before the first 10s interval, nothing will be written.
+        repo_root = Path(__file__).resolve().parents[2]
+        latest_log = repo_root / "output" / "latest.log"
         try:
-            completion = self._client.chat.completions.create(**request_kwargs)
+            latest_log.parent.mkdir(parents=True, exist_ok=True)
+            latest_log.write_text("", encoding="utf-8")
+        except Exception:
+            # Don't fail the request if logging setup fails
+            pass
+
+        try:
+            # Request streaming from the provider and periodically flush to disk.
+            request_kwargs["stream"] = True
+            stream = self._client.chat.completions.create(**request_kwargs)
+            content_parts: list[str] = []
+            start_time = time.time()
+            last_write = start_time
+            try:
+                for chunk in stream:
+                    choices = getattr(chunk, "choices", None)
+                    if not choices:
+                        continue
+                    delta = choices[0].delta
+                    chunk_content = getattr(delta, "content", None)
+                    if chunk_content:
+                        content_parts.append(chunk_content)
+
+                    # Write accumulated output to latest.log every 10 seconds.
+                    now = time.time()
+                    if now - last_write >= 10:
+                        try:
+                            latest_log.write_text("".join(content_parts), encoding="utf-8")
+                        except Exception:
+                            # Ignore logging errors
+                            pass
+                        last_write = now
+            finally:
+                close = getattr(stream, "close", None)
+                if callable(close):
+                    close()
+
+            content = "".join(content_parts)
+            if not content:
+                raise RetryableProcessorError("Provider returned an empty completion body")
         except self.RETRYABLE_ERRORS as exc:
             raise RetryableProcessorError(str(exc)) from exc
         except Exception as exc:
             raise PermanentProcessorError(str(exc)) from exc
-
-        content = completion.choices[0].message.content
-        if content is None:
-            raise RetryableProcessorError("Provider returned an empty completion body")
         self._log("RESPONSE_JSON:")
         self._log(maybe_json_value(str(content)))
         return normalized_request, str(content)

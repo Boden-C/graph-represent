@@ -1,8 +1,8 @@
 You are evaluating the quality of an argumentative student essay using only its argument graph.
 
 Return JSON with:
+- a `thinking` string grounded only in the graph
 - a `scores` object using numeric values from 0.0 to 1.0
-- a required `rationale` string grounded only in the graph
 
 Use these score names:
 - cogency_mean

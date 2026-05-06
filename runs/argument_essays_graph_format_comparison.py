@@ -6,7 +6,7 @@ from pathlib import Path
 from graph_represent.dataloaders.corpus_graphs import CorpusGraphDataLoader
 from graph_represent.format_suite import COMPARISON_FORMATS
 from graph_represent.graph_formats import GraphTextFormat, fenced_graph_text, render_graph
-from graph_represent.models import GEMMA3_27B
+from graph_represent.models import DEFAULT_PROVIDER, MODEL_BASE_URLS
 from graph_represent.processors.model_inference import ModelInference
 from graph_represent.types.chat import ChatMessage, ChatMessagesPayload, TextContentPart
 from graph_represent.types.corpus import CorpusGraphSample
@@ -24,7 +24,7 @@ GRAPH_PATH = CORPUS_ROOT / "graphs" / "essays_normalized.json"
 ANSWERS_PATH = CORPUS_ROOT / "answers" / "quality_scores.json"
 DATASET_PATH = CORPUS_ROOT / "datasets" / "dev_set.json"
 PROMPT_PATH = REPO_ROOT / "graph_represent" / "prompts" / "ArgumentQualityScoresByModel__GraphByModel.md"
-MODEL = GEMMA3_27B
+MODEL_NAME = "google/gemma-3-27b-it"
 TARGET_FORMATS = list(COMPARISON_FORMATS)
 
 
@@ -70,9 +70,9 @@ def build_workflow() -> ScriptWorkflow:
         format_name: ModelInference(
             name=f"infer_quality__{format_name.value}",
             config={
-                "provider": MODEL.provider,
-                "base_urls": MODEL.base_urls,
-                "model": MODEL.name,
+                "provider": DEFAULT_PROVIDER,
+                "base_urls": MODEL_BASE_URLS,
+                "model": MODEL_NAME,
                 "system_prompt_file": str(PROMPT_PATH),
                 "temperature": 0.0,
                 "max_tokens": 512,
@@ -103,7 +103,7 @@ def build_workflow() -> ScriptWorkflow:
                     item_id=sample.id,
                     version_name=sample.graph_version,
                     input_mode=format_name.value,
-                    model_name=MODEL.name,
+                    model_name=MODEL_NAME,
                     scores=ArgumentQualityScores.model_validate(scores.model_dump()),
                     gold_scores=gold_scores,
                     input_char_count=char_count,

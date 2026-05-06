@@ -101,10 +101,11 @@ class ScriptRuntime(RuntimeProtocol):
                 self._model_base_url_cache[cache_key] = candidate
                 return candidate
 
-        # Nothing matched (offline, wrong host, etc). Keep deterministic behavior.
-        fallback = base_urls[0]
-        self._model_base_url_cache[cache_key] = fallback
-        return fallback
+        tried_hosts = ", ".join(base_urls)
+        raise ValueError(
+            f"Model '{model}' was not found on any configured host for provider '{provider}'. "
+            f"Checked: {tried_hosts}"
+        )
 
     @staticmethod
     def _models_url(base_url: str) -> str:

@@ -56,7 +56,7 @@ def mock_ai_requests(monkeypatch: pytest.MonkeyPatch) -> Callable[[], dict[str, 
                             "reasonableness_rebuttal_mean": 0.5,
                             "overall_quality_mean": 0.65,
                         },
-                        rationale="Mock quality scores.",
+                        thinking="Mock quality scores.",
                     )
             else:
                 response_model = response_type()

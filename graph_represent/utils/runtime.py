@@ -22,6 +22,10 @@ class InferenceCache:
         self._root = root
         self._root.mkdir(parents=True, exist_ok=True)
 
+    @property
+    def root(self) -> Path:
+        return self._root
+
     def build_cache_key(self, normalized_request: dict[str, Any]) -> str:
         return sha256_text(canonical_json(normalized_request))
 
